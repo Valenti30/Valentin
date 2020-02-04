@@ -22,6 +22,16 @@ JSON crearJugador(JSON recibido){
     return jsonMessage;
 }
 
+JSON borrarJugador(JSON recibido){
+    idServer++;
+    JSON jsonMessage;
+    jsonMessage["idmsgServer"]=idServer;
+    jsonMessage["action"]="responseCrearJugador";
+    jsonMessage["respuesta"]="Jugador borrado";
+    jsonMessage["datos"]=recibido;
+    return jsonMessage;
+}
+
 int main(int argc, char *argv[])
 {
 
