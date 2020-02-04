@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title> eBOARD </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="widht=device-widht, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link href="estiloWebUsuario.css" type="text/css" rel="stylesheet">
+<script>
+let socket = new WebSocket("ws://127.0.0.1:9990");
+
+socket.onopen = function(e) {
+  console.log("[open] Connection established");
+  console.log("Sending to server");
+  socket.send('{"message":"Entra"}');
+  console.log("Conexion abierta");
+};
+
+
+var g_idMensaje = 0;
+var id_jugador = 0;
+
+function dameIdMensaje()
+{
+    g_idMensaje++;
+    return g_idMensaje;
+}
+
+function crearJugador()
+{
+    id_jugador++;
+    var id_mensaje = dameIdMensaje();
+
+    var mensajeJSON = {action: "crearJugador", id: id_mensaje, idJugador: id_jugador};
+    socket.send(JSON.stringify(mensajeJSON));
+
+}
+
+
+
+socket.onmessage = function(event) {     //Lo que ejecutamos cuando se recibe un mensaje.
+  //console.log(`[message] Data received from server: ${event.data}`);
+  var object = JSON.parse(event.data);
+  if(object.action == "responseCrearJugador"){
+    console.log(object.respuesta);
+    console.log(object.datos);
+  }
+
+
+
+
+  //document.getElementById("received_messages").innerHTML += "<div>" + object.message + "</div>";
+
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+  } else {
+    // e.g. server process killed or network down
+    // event.code is usually 1006 in this case
+    console.log('[close] Connection died');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
+</script>
+</head>
+<body>
+<h1>eBOARD </h1>
+    <header>
+    	<nav class="menuCSS3">
+		<ul>
+			<li><a href="#">Menú</a>
+				<ul>
+					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Miequipo">Mi equipo</a></li>
+					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Mistaff">Mi staff</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Crear</a>
+				<ul>
+					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Crearjugador">Crear jugador</a></li>
+					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Crearstaff">Crear personal staff</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Entrenamiento</a>
+				<ul>
+					<li><a href="#">Marcador</a></li>
+				</ul>
+			<li><a href="#">Equipos</a>
+				<ul>
+					<li><a href="#">Contrarios</a></li>
+					<li><a href="#">Crear equipo visitante</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Configuración</a>
+				<ul>
+					<li><a href="#">Estadísticas temporada</a></li>
+					<li><a href="#">Estadísticas partido anterior</a></li>
+					<li><a href="#">Análisis tiro temporada</a></li>
+					<li><a href="#">Análisis tiro jugador</a></li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
+    </header>
+</body>
+</html>
+
+
+
+
