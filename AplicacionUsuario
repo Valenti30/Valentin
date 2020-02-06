@@ -18,6 +18,7 @@ socket.onopen = function(e) {
 
 var g_idMensaje = 0;
 var id_jugador = 0;
+var id_staff = 0;
 
 function dameIdMensaje()
 {
@@ -35,17 +36,29 @@ function crearJugador()
 
 }
 
+function crearStaff()
+{
+    id_staff++;
+    var id_mensaje = dameIdMensaje();
 
+    var mensajeJSON = {action: "crearStaff", id: id_mensaje, idStaff: id_staff};
+    socket.send(JSON.stringify(mensajeJSON));
+
+}
 
 socket.onmessage = function(event) {     //Lo que ejecutamos cuando se recibe un mensaje.
   //console.log(`[message] Data received from server: ${event.data}`);
   var object = JSON.parse(event.data);
-  if(object.action == "responseCrearJugador"){
+  if(object.action == "responseCrearJugador")
+  {
     console.log(object.respuesta);
     console.log(object.datos);
   }
-
-
+  if(object.action == "responseCrearStaff")
+  {
+    console.log(object.respuesta);
+    console.log(object.datos);
+  }
 
 
   //document.getElementById("received_messages").innerHTML += "<div>" + object.message + "</div>";

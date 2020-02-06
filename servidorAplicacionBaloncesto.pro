@@ -1,4 +1,5 @@
-QT -= gui
+QT -= core gui
+QT += sql
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -15,7 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+    servidor.cpp
 
 LIBS += -pthread -lz
 
@@ -38,4 +39,5 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../.
 else:unix: PRE_TARGETDEPS += $$PWD/../../compiled/lib/libixwebsocket.a
 
 HEADERS += \
-    json.hpp
+    json.hpp \
+    servidor.h
