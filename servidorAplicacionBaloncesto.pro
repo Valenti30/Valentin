@@ -16,9 +16,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    servidor.cpp
+    servidor.cpp \
+    conexion.cpp
 
 LIBS += -pthread -lz
+
+HEADERS += \
+    json.hpp \
+    servidor.h \
+    conexion.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -38,6 +44,4 @@ else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/..
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../compiled/lib/debug/ixwebsocket.lib
 else:unix: PRE_TARGETDEPS += $$PWD/../../compiled/lib/libixwebsocket.a
 
-HEADERS += \
-    json.hpp \
-    servidor.h
+
