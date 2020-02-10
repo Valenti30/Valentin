@@ -6,16 +6,13 @@
 
 Usuario::Usuario(std::string nombre, std::string password, std::string email)
 {
-
     this->m_nombre = nombre;
     this->m_password = password;
     this->m_email = email;
-
 }
 
 void Usuario::save()
 {
-
     QSqlQuery query;
     query.prepare("INSERT INTO usuario (nombre, password, email) VALUES (:nombre, crypt(:pass, gen_salt('bf')), :email);");
 
@@ -121,5 +118,3 @@ int Usuario::getId(){ return m_id; }
 std::string Usuario::getNombre(){ return m_nombre; }
 std::string Usuario::getPassword(){ return m_password; }
 std::string Usuario::getEmail(){ return m_email; }
-
-

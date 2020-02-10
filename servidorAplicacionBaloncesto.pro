@@ -17,14 +17,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     servidor.cpp \
-    conexion.cpp
+    conexion.cpp \
+    jugador.cpp \
+    usuario.cpp
 
 LIBS += -pthread -lz
 
 HEADERS += \
     json.hpp \
     servidor.h \
-    conexion.h
+    conexion.h \
+    jugador.h \
+    usuario.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
