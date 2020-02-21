@@ -42,7 +42,16 @@ Servidor::Servidor(int puerto)
     jsonMessage["datos"]=recibido;
     return jsonMessage;
 }
-
+///3:
+    JSON iniciarSesion(JSON recibido){
+    idServer++;
+    JSON jsonMessage;
+    jsonMessage["idmsgServer"]=idServer;
+    jsonMessage["action"]="iniciarSesion";
+    jsonMessage["respuesta"]="Sesión iniciada correctamente";
+    jsonMessage["datos"]=recibido;
+    return jsonMessage;
+}
 
 /*JSON borrarJugador(JSON recibido){
      idServer++;
@@ -124,6 +133,10 @@ Servidor::Servidor(int puerto)
                           {"id", "5"}
                           };
                           */
+                         
+                         //cada vez que recibo mns comproobar campos de JSON
+                         //if {
+                         //respuesta["action"] == select *;
 
                                              }
                                              else if (msg->type == ix::WebSocketMessageType::Close)
@@ -152,12 +165,17 @@ Servidor::Servidor(int puerto)
                                                      if (receivedObject["action"] =="crearJugador") {
                                                          webSocket->send(crearJugador(receivedObject).dump());
                                                      }
-                                                }
-                                                 if (exists(receivedObject, "action")) {
+
                                                      if (receivedObject["action"] =="crearStaff"){
                                                          webSocket->send(crearStaff(receivedObject).dump());
                                                     }
+
+                                                     if (receivedObject["action"] =="iniciarSesion"){
+                                                         webSocket->send(iniciarSesion(receivedObject).dump());
+                                                    }
                                                  }
+
+
 
 
                                              }

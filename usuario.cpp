@@ -28,7 +28,7 @@ void Usuario::save()
 
     if(error == " ")
     {
-        query.prepare("select * from usuario order by idusuario desc limit 1;");
+        query.prepare("select * from usuario order by idUsuario desc limit 1;");
         query.exec();
         QSqlRecord rec = query.record();
         while (query.next())
