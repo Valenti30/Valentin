@@ -16,6 +16,10 @@ class Usuario {
 
 var usuario;
 
+
+
+
+
 function iniciarSesion()
 {
     var nombre=document.getElementById("usuario_login").value;
@@ -26,6 +30,20 @@ function iniciarSesion()
     console.log(nombre);
     console.log(pass);
 }
+
+function cerrarCapa()
+{
+    var el = document.getElementById("id01"); 
+    el.style.display = "none"; 
+
+}
+
+window.onload = function(){
+    cerrarCapa();
+    
+}
+
+
 function crearJugador(item)
 {
     

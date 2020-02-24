@@ -13,7 +13,7 @@ class Jugador
 {
 
 public:
-    Jugador(std::string nombre, std::string apellidos, std::string dni, std::string dorsal);
+    //Jugador(std::string nombre, std::string apellidos, std::string dni, std::string dorsal);
     JSON toJSON();
     Jugador fromJSON(JSON);
     void save();
@@ -26,6 +26,13 @@ public:
     std::string getApellidos();
     std::string getDni();
     std::string getDorsal();
+
+    void setNombre(QString nombre);
+    void setApellidos(QString apellidos);
+    void setDni(QString dni);
+    void setDorsal(QString dorsal);
+    void setPosicion(QString posicion);
+    void setEmail(QString email);
 
 private:
     int m_id{0};

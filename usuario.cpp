@@ -1,120 +1,66 @@
 #include "usuario.h"
-#include <QVariant>
-#include <QString>
 #include <QDebug>
 #include <QSqlError>
 
-Usuario::Usuario(std::string nombre, std::string password, std::string email)
-{
-    this->m_nombre = nombre;
-    this->m_password = password;
-    this->m_email = email;
+
+
+///GET
+QString usuario::getUser(){
+    return m_user;
+}
+QString usuario::getPass(){
+    return m_pass;
+}
+/*QString usuario::getUserId(){
+    return m_idUser;
+}*/
+
+///SET
+void usuario::setUser(QString idUser) {
+    m_user = idUser;
+}
+void usuario::setPass(QString pass){
+    m_pass = pass;
 }
 
-void Usuario::save()
-{
-    QSqlQuery query;
-    query.prepare("INSERT INTO usuario (nombre, password, email) VALUES (:nombre, crypt(:pass, gen_salt('bf')), :email);");
+bool usuario::save(){
+    QSqlQuery q;
 
-    QVariant nombre = QString::fromStdString(m_nombre);
-    QVariant pass = QString::fromStdString(m_password);
-    QVariant email = QString::fromStdString(m_email);
-    query.bindValue(":nombre", nombre);
-    query.bindValue(":pass", pass);
-    query.bindValue(":email", email);
-    query.exec();
-
-    QString error (query.lastError().text());
-
-    if(error == " ")
+    if (m_idUser > 0)
     {
-        query.prepare("select * from usuario order by idUsuario desc limit 1;");
-        query.exec();
-        QSqlRecord rec = query.record();
-        while (query.next())
-        {
-            int id = query.value("idusuario").toInt();
-            this->m_id = id;
-        }
-    }else
-    {
-        qDebug() << error;
+        qDebug() << "Update";
+        q.prepare("UPDATE jugadores SET usuario = :user, pass = :password WHERE id = :iduser");
+        q.bindValue(":iduser", m_idUser);
+        q.bindValue(":user", m_user);
+        q.bindValue(":password", m_pass);
     }
-
-}
-
-Usuario Usuario::load(std::string email, std::string password)
-{
-
-    Usuario usuario("", "", "");
-
-    QSqlQuery query;
-    query.prepare("SELECT (password = crypt(:password, password)) AS pwd_match  FROM usuario where email = :email;");
-
-    QVariant eml = QString::fromStdString(email);
-    QVariant pas = QString::fromStdString(password);
-    query.bindValue(":email", eml);
-    query.bindValue(":password", pas);
-    query.exec();
-
-    bool passCorrect = false;
-    QSqlRecord rec = query.record();
-    while (query.next())
+    else
     {
-        passCorrect = QVariant(query.value("pwd_match")).toBool();
-    } // end while
+       qDebug() << "Insert";
+       q.prepare("INSERT INTO usuarios (usuario, pass) VALUES (:user, ::password)");
+       q.bindValue(":user", m_user);
+       q.bindValue(":password", m_pass);
+    } //end if
 
-    if(passCorrect)
-    {
+    bool result {q.exec()};
 
-        query.prepare("SELECT * from usuario where email = :email");
-        query.bindValue(":email", eml);
-        query.exec();
+    qDebug() << result;
+    qDebug() << q.lastError();
+}
 
-        QSqlRecord rec = query.record();
-        while (query.next())
-        {
-            QString nombre = query.value("nombre").toString();
-            QString pass = query.value("password").toString();
-            QString email = query.value("email").toString();
+void usuario::load(int id){
+    QSqlQuery q;
+    q.prepare("SELECT * from usuario where id = :iduser LIMIT 1");
+    q.bindValue(":iduser", id);
+    bool result {q.exec()};
+    qDebug() << q.size();
 
-            Usuario user(nombre.toUtf8().constData(), pass.toUtf8().constData(), email.toUtf8().constData());
-            user.m_id = query.value("idusuario").toInt();
-            return user;
-        }
-
-    } // end if
-
-
-    return usuario;
+    if (result) {
+        q.next();
+        m_idUser = id;
+        m_user = q.value("usuario").toString();
+        m_pass = q.value("pass").toString();
+    } //end if
 
 }
 
-void Usuario::remove(int id)
-{
-
-    QSqlQuery query;
-    query.prepare("DELETE FROM usuario where idusuario = :id");
-
-    query.bindValue(":id", id);
-    query.exec();
-
-}
-
-JSON Usuario::toJSON()
-{
-
-    JSON usuario;
-    usuario["id"] = m_id;
-    usuario["nombre"] = m_nombre;
-    usuario["pass"] = m_password;
-    usuario["email"] = m_email;
-
-    return usuario;
-
-}
-
-int Usuario::getId(){ return m_id; }
-std::string Usuario::getNombre(){ return m_nombre; }
-std::string Usuario::getPassword(){ return m_password; }
-std::string Usuario::getEmail(){ return m_email; }

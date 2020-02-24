@@ -99,14 +99,14 @@ socket.onerror = function(error) {
 		<ul>
 			<li><a href="#">Menú</a>
 				<ul>
-					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Miequipo">Mi equipo</a></li>
-					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Mistaff">Mi staff</a></li>
+					<li><a href="#">Mi equipo</a></li>
+					<li><a href="#">Mi staff</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Crear</a>
 				<ul>
-					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Crearjugador">Crear jugador</a></li>
-					<li><a href="file:///home/usuario/C++/servidorAplicacionBaloncesto/Crearstaff">Crear personal staff</a></li>
+					<li><a href="#">Crear jugador</a></li>
+					<li><a href="#">Crear personal staff</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Entrenamiento</a>
@@ -138,11 +138,11 @@ socket.onerror = function(error) {
 class="close" title="Close Modal">&times;</span>
 
   <!-- Modal Content -->
-  <form class="modal-content animate" action="/action_page.php">
+  <div class="modal-content animate" action="/action_page.php">
     <div class="imgcontainer">
       <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
        </div>
-          <div class="container" align="left"> 
+          <div  class="container" align="left"> 
             <label class="datos" for="uname"><b>Username</b></label>
             <input id="usuario_login" type="text" placeholder="Enter Username" name="uname" required>
             <br>
@@ -152,16 +152,15 @@ class="close" title="Close Modal">&times;</span>
             <input id="contrasenya_login" type="password" placeholder="Enter Password" name="psw" required>
             <br>
             <br>
-            <button type="submit">Login</button>
+            <button id="log" onclick="cerrarCapa()">Login</button>
             <br>
             <label>
                 <input type="checkbox" checked="checked" name="remember"> Remember me
             </label><br><br>
             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
             <span class="psw">Forgot <a href="#">password?</a></span>
-    </div> 
-
-  </form>
+        </div> 
+    </div>
 </div> 
 No estás logueado
 </header>

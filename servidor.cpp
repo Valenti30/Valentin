@@ -5,9 +5,13 @@
 #include "ixwebsocket/IXWebSocket.h"
 #include "ixwebsocket/IXConnectionState.h"
 
+#include "jugador.h"
 #include "servidor.h"
+#include "usuario.h"
 
-
+///variables necesarias
+bool g_logueado;
+int g_id_usuario;
 Servidor::Servidor(int puerto)
 {
     this->m_puerto = puerto;
@@ -21,6 +25,139 @@ Servidor::Servidor(int puerto)
  {
      return json.find(key) != json.end();
  }
+
+ ///FUNCIÓN PARA HACER LOGIN EN LA APP
+
+ void login(ix::WebSocket *webSocket, JSON received){
+     std::string user;
+     std::string pass;
+
+     received["user"].get_to(user);
+     received["pass"].get_to(pass);
+
+     ///Consulta para buscar el usuario en la BBDD
+     QSqlQuery q;
+     q.prepare("SELECT * FROM usuarios WHERE usuario = :user");
+     q.bindValue(":user", user.c_str());
+     q.exec();
+
+     JSON respuesta;
+     respuesta["type"] ="login";
+
+     ///comprobamos si el usuario existe
+     if (q.size() > 0){
+         ///consulta para encriptar la contraseña
+         QSqlQuery q2;
+         q2.prepare("SELECT ENCRYPT(:pass, :uuid)");
+         q2.bindValue(":pass", pass.c_str());
+         if(q.next()){
+             g_id_usuario = q.value("id").toInt();
+             respuesta["id_user"] = q.value("id").toString().toStdString();
+             qDebug() << "Existe el usuario, id = " << g_id_usuario;
+             q2.bindValue(":uuid", q.value("uuid"));
+             q2.exec();
+         }
+
+         std::string encryptedpass;
+
+         if (q2.first()){
+             encryptedpass = q2.value(0).toString().toStdString();
+         }//end if
+
+         ///comprobamos si las contraseñas coinciden
+         if(encryptedpass.compare(q.value("pass").toString().toStdString()) == 0){
+             respuesta["operationSuccess"] = "true";
+             g_logueado = true;
+         } else {
+             respuesta["operationSuccess"] = "false";
+             respuesta["errorMessage"] = "La contraseña no es correcta";
+         } //end if
+     } else {
+         qDebug() << "No existe el usuario";
+         respuesta["operationSuccess"] = "false";
+         respuesta["errorMessage"] = "El usuario no existe";
+     } //end if
+ }
+
+
+ void logout(ix::WebSocket *webSocket){
+     ///comprobar que el usuario y la contraseña son correctos
+     JSON jsonMessage = {
+         {"type", "logout"},
+         {"operationSuccess", true},
+
+     };
+
+     std::string messageToSend = jsonMessage.dump(); //convertido a JSON
+     webSocket->send(messageToSend); //enviar JSON al cliente
+     g_logueado = false;
+ }
+
+
+
+ void crearUsuario(ix::WebSocket *webSocket, JSON received){
+     std::string user_name;
+     std::string user_pass;
+
+     received["usuario"].get_to(user_name);
+     received["password"].get_to(user_pass);
+
+     usuario u;
+     u.setUser(QString::fromUtf8(user_name.c_str()));
+     u.setPass(QString::fromUtf8(user_pass.c_str()));
+
+     u.save();
+
+     JSON jsonMessage = {
+         {"type", "crearUsuario"},
+         {"operationSuccess", true},
+
+     };
+
+     std::string messageToSend = jsonMessage.dump();//convertido a JSON
+     webSocket->send(messageToSend); //enviar JSON al cliente
+ }
+
+ void crearJugador(ix::WebSocket *webSocket, JSON received){
+     std::string nombre_jugador;
+     std::string apellidos_jugador;
+     std::string dni_jugador;
+     std::string dorsal_jugador;
+     std::string posicion_jugador;
+     std::string email_jugador;
+
+     received["nombre_jugador"].get_to(nombre_jugador);
+     received["apellidos_jugador"].get_to(apellidos_jugador);
+     received["dni_jugador"].get_to(dni_jugador);
+     received["dorsal_jugador"].get_to(dorsal_jugador);
+     received["posicion_jugador"].get_to(posicion_jugador);
+     received["email_jugador"].get_to(email_jugador);
+
+     Jugador j;
+     j.setNombre(QString::fromUtf8(nombre_jugador.c_str()));
+     j.setApellidos(QString::fromUtf8(apellidos_jugador.c_str()));
+     j.setDni(QString::fromUtf8(dni_jugador.c_str()));
+     j.setDorsal(QString::fromUtf8(dorsal_jugador.c_str()));
+     j.setPosicion(QString::fromUtf8(posicion_jugador.c_str()));
+     j.setEmail(QString::fromUtf8(email_jugador.c_str()));
+
+     j.save();
+
+     ///crear el jugador en la bbdd
+     JSON jsonMessage = {
+         {"type", "crearJugador"},
+         {"operationSuccess", true},
+
+     };
+
+     std::string messageToSend = jsonMessage.dump();//convertido a JSON
+     webSocket->send(messageToSend); //enviar JSON al cliente
+
+
+
+ }
+
+
 
 ///1:
      JSON crearJugador(JSON recibido){
@@ -66,6 +203,7 @@ Servidor::Servidor(int puerto)
 
  int main(int argc, char *argv[])
  {
+     g_logueado = false;
     ///Para conectar la bbdd
     QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
     bool conectado {false};
