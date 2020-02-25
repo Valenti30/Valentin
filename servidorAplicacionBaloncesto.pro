@@ -4,6 +4,8 @@ QT += sql
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
+TRANSLATIONS += myapp_es_ES.ts
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the

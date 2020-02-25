@@ -1,6 +1,8 @@
 #include <iostream>
 #include <QSqlDatabase>
 #include <QDebug>
+#include <QCoreApplication>
+#include <QTranslator>
 #include "ixwebsocket/IXWebSocketServer.h"
 #include "ixwebsocket/IXWebSocket.h"
 #include "ixwebsocket/IXConnectionState.h"
@@ -189,7 +191,14 @@ Servidor::Servidor(int puerto)
 
  int main(int argc, char *argv[])
  {
+     QCoreApplication a(argc, argv);
      g_logueado = false;
+    QTranslator myappTranslator;
+    //myappTranslator.load("myapp_" + QLocale::system().name());
+    myappTranslator.load("myapp_es_ES", "../servidorAplicacionBaloncesto");
+    a.installTranslator(&myappTranslator);
+
+
     ///Para conectar la bbdd
     QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
     bool conectado {false};
@@ -207,6 +216,8 @@ Servidor::Servidor(int puerto)
                      if (msg->type == ix::WebSocketMessageType::Open)
                      {
                          std::cout << "New connection" << std::endl;
+                         ///Traducción
+                         qDebug() << QObject::tr("New connection");
 
                         ///Conectar la bbdd:
                         db.setHostName("localhost");
@@ -298,9 +309,6 @@ Servidor::Servidor(int puerto)
                                                          webSocket->send(iniciarSesion(receivedObject).dump());
                                                     }
                                                  }
-
-
-
 
                                              }
                                          }
