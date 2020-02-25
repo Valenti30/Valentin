@@ -137,8 +137,8 @@ Servidor::Servidor(int puerto)
      j.setNombre(QString::fromUtf8(nombre_jugador.c_str()));
      j.setApellidos(QString::fromUtf8(apellidos_jugador.c_str()));
      j.setDni(QString::fromUtf8(dni_jugador.c_str()));
-     j.setDorsal(QString::fromUtf8(dorsal_jugador.c_str()));
-     j.setPosicion(QString::fromUtf8(posicion_jugador.c_str()));
+     j.setDorsal(std::stoi(dorsal_jugador));//int
+     j.setPosicion(std::stoi(posicion_jugador));//int
      j.setEmail(QString::fromUtf8(email_jugador.c_str()));
 
      j.save();
@@ -152,23 +152,19 @@ Servidor::Servidor(int puerto)
 
      std::string messageToSend = jsonMessage.dump();//convertido a JSON
      webSocket->send(messageToSend); //enviar JSON al cliente
-
-
-
  }
-
-
 
 ///1:
-     JSON crearJugador(JSON recibido){
-     idServer++;
-     JSON jsonMessage;
-     jsonMessage["idmsgServer"]=idServer;
-     jsonMessage["action"]="responseCrearJugador";
-     jsonMessage["respuesta"]="Jugador creado";
-     jsonMessage["datos"]=recibido;
-     return jsonMessage;
- }
+     /*JSON crearJugador(JSON recibido)
+     {
+         idServer++;
+         JSON jsonMessage;
+         jsonMessage["idmsgServer"]=idServer;
+         jsonMessage["action"]="responseCrearJugador";
+         jsonMessage["respuesta"]="Jugador creado";
+         jsonMessage["datos"]=recibido;
+         return jsonMessage;
+    }*/
 ///2:
     JSON crearStaff(JSON recibido){
     idServer++;
@@ -190,16 +186,6 @@ Servidor::Servidor(int puerto)
     return jsonMessage;
 }
 
-/*JSON borrarJugador(JSON recibido){
-     idServer++;
-     JSON jsonMessage;
-     jsonMessage["idmsgServer"]=idServer;
-     JSON borrarJugador(JSON recibido){
-     jsonMessage["respuesta"]="Jugador borrado";
-     jsonMessage["datos"]=recibido;
-     return jsonMessage;
-}
-}*/
 
  int main(int argc, char *argv[])
  {
@@ -301,7 +287,7 @@ Servidor::Servidor(int puerto)
                                                  }
                                                  if (exists(receivedObject, "action")) {
                                                      if (receivedObject["action"] =="crearJugador") {
-                                                         webSocket->send(crearJugador(receivedObject).dump());
+                                                         crearJugador(webSocket.get() , receivedObject);
                                                      }
 
                                                      if (receivedObject["action"] =="crearStaff"){

@@ -1,10 +1,10 @@
 #ifndef JUGADOR_H
 #define JUGADOR_H
 
-#include <string>
-#include <list>
+#include <QString>
+#include <QDate>
 #include <QSqlQuery>
-#include <QSqlRecord>
+#include <QVariant>
 #include "json.hpp"
 
 using JSON = nlohmann::json;
@@ -12,34 +12,38 @@ using JSON = nlohmann::json;
 class Jugador
 {
 
-public:
-    //Jugador(std::string nombre, std::string apellidos, std::string dni, std::string dorsal);
-    JSON toJSON();
-    Jugador fromJSON(JSON);
-    void save();
-    static Jugador load(std::string nombre, std::string apellidos, std::string dni, std::string dorsal);
-    void remove(int);
-    static std::list<Jugador> find(std::string);
-    ~Jugador();
-    int getId();
-    std::string getNombre();
-    std::string getApellidos();
-    std::string getDni();
-    std::string getDorsal();
+private:
+    int m_idJugador = 0;
+    QString m_nombre;
+    QString m_apellidos;
+    QString m_dni;
+    int m_dorsal;
+    int m_posicion;
+    QString m_email;
 
+public:
+    ///GET
+    QString getNombre();
+    QString getApellidos();
+    QString getDni();
+    int getDorsal();
+    int getPosicion();
+    QString getEmail();
+
+
+    ///SET
     void setNombre(QString nombre);
     void setApellidos(QString apellidos);
     void setDni(QString dni);
-    void setDorsal(QString dorsal);
-    void setPosicion(QString posicion);
+    void setDorsal(int dorsal);
+    void setPosicion(int posicion);
     void setEmail(QString email);
 
-private:
-    int m_id{0};
-    std::string m_nombre{""};
-    std::string m_apellidos{""};
-    std::string m_dni{""};
-    std::string m_dorsal{""};
+    ///BBDD connectors
+     bool save();
+     void load(int id);
+
+
 
 };
 
