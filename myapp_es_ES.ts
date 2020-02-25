@@ -7,5 +7,9 @@
         <source>New connection</source>
         <translation>Nueva conexion</translation>
     </message>
+    <message>
+        <source>Bye bye connection</source>
+        <translation>Conexion finalizada</translation>
+    </message>
 </context>
 </TS>

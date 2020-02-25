@@ -277,6 +277,8 @@ Servidor::Servidor(int puerto)
                                              else if (msg->type == ix::WebSocketMessageType::Close)
                                              {
                                                  std::cout << "Bye bye connection" << std::endl;
+                                                 ///Traducción
+                                                 qDebug() << QObject::tr("Bye bye connection");
                                              }
                                              else if (msg->type == ix::WebSocketMessageType::Message)
                                             {
