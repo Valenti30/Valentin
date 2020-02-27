@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlQuery>
 
+
 App::App(QObject *parent) : QObject(parent)
 {
     QTimer::singleShot(0, this, SLOT(run()));
@@ -12,6 +13,7 @@ App::App(QObject *parent) : QObject(parent)
 usuario::usuario(){
 
 }
+
 
 void usuario::load(Db db , int id){
     QSqlQuery q(db.m_db);

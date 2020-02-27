@@ -1,0 +1,134 @@
+\hypertarget{servidor_8cpp}{}\section{servidor.\+cpp File Reference}
+\label{servidor_8cpp}\index{servidor.\+cpp@{servidor.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$Q\+Sql\+Database$>$}\newline
+{\ttfamily \#include $<$Q\+Debug$>$}\newline
+{\ttfamily \#include $<$Q\+Core\+Application$>$}\newline
+{\ttfamily \#include $<$Q\+Translator$>$}\newline
+{\ttfamily \#include \char`\"{}ixwebsocket/\+I\+X\+Web\+Socket\+Server.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ixwebsocket/\+I\+X\+Web\+Socket.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ixwebsocket/\+I\+X\+Connection\+State.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}jugador.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}servidor.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}usuario.\+h\char`\"{}}\newline
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{servidor_8cpp_ab6104b89642419db4e355b7b2e40abbe}\label{servidor_8cpp_ab6104b89642419db4e355b7b2e40abbe}} 
+using {\bfseries J\+S\+ON} = \mbox{\hyperlink{namespacenlohmann_a2bfd99e845a2e5cd90aeaf1b1431f474}{nlohmann\+::json}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{servidor_8cpp_a57545cfd6177ab52f91ef3042d9a01ae}{exists}} (const \mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} \&json, const std\+::string \&key)
+\begin{DoxyCompactList}\small\item\em exists Comprobación para ver si existe el mns \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{servidor_8cpp_ab68188d05da5120525d47223630b928f}{logout}} (ix\+::\+Web\+Socket $\ast$web\+Socket)
+\begin{DoxyCompactList}\small\item\em F\+U\+N\+C\+IÓN P\+A\+RA H\+A\+C\+ER L\+O\+G\+IN EN LA A\+PP. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{servidor_8cpp_a97143dde46a66d7fd487c5a945b7e572}{crear\+Usuario}} (ix\+::\+Web\+Socket $\ast$web\+Socket, \mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} received)
+\begin{DoxyCompactList}\small\item\em crear\+Usuario Función para crear usuarios \end{DoxyCompactList}\item 
+\mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} \mbox{\hyperlink{servidor_8cpp_a28536b78f26f213e8b7097c06413bb1a}{crear\+Staff}} (\mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} recibido)
+\begin{DoxyCompactList}\small\item\em 1\+: \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{servidor_8cpp_a72627896359f86de636a3fe3985e8bc7}\label{servidor_8cpp_a72627896359f86de636a3fe3985e8bc7}} 
+\mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} \mbox{\hyperlink{servidor_8cpp_a72627896359f86de636a3fe3985e8bc7}{iniciar\+Sesion}} (\mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} recibido)
+\begin{DoxyCompactList}\small\item\em 3\+: \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servidor_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em main Función principal del programa \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{servidor_8cpp_a04c0f1d98cdfeb71fc9c9f71db524c78}\label{servidor_8cpp_a04c0f1d98cdfeb71fc9c9f71db524c78}} 
+bool \mbox{\hyperlink{servidor_8cpp_a04c0f1d98cdfeb71fc9c9f71db524c78}{g\+\_\+logueado}}
+\begin{DoxyCompactList}\small\item\em variables necesarias \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{servidor_8cpp_a5fd5a257bbea6327a33710edc94282b9}\label{servidor_8cpp_a5fd5a257bbea6327a33710edc94282b9}} 
+int {\bfseries g\+\_\+id\+\_\+usuario}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{servidor_8cpp_a28536b78f26f213e8b7097c06413bb1a}\label{servidor_8cpp_a28536b78f26f213e8b7097c06413bb1a}} 
+\index{servidor.\+cpp@{servidor.\+cpp}!crear\+Staff@{crear\+Staff}}
+\index{crear\+Staff@{crear\+Staff}!servidor.\+cpp@{servidor.\+cpp}}
+\subsubsection{\texorpdfstring{crear\+Staff()}{crearStaff()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} crear\+Staff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}}}]{recibido }\end{DoxyParamCaption})}
+
+
+
+1\+: 
+
+2\+: \mbox{\Hypertarget{servidor_8cpp_a97143dde46a66d7fd487c5a945b7e572}\label{servidor_8cpp_a97143dde46a66d7fd487c5a945b7e572}} 
+\index{servidor.\+cpp@{servidor.\+cpp}!crear\+Usuario@{crear\+Usuario}}
+\index{crear\+Usuario@{crear\+Usuario}!servidor.\+cpp@{servidor.\+cpp}}
+\subsubsection{\texorpdfstring{crear\+Usuario()}{crearUsuario()}}
+{\footnotesize\ttfamily void crear\+Usuario (\begin{DoxyParamCaption}\item[{ix\+::\+Web\+Socket $\ast$}]{web\+Socket,  }\item[{\mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}}}]{received }\end{DoxyParamCaption})}
+
+
+
+crear\+Usuario Función para crear usuarios 
+
+
+\begin{DoxyParams}{Parameters}
+{\em web\+Socket} & --$>$ conexion \\
+\hline
+{\em received} & --$>$ lo que recibe el cliente \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{servidor_8cpp_a57545cfd6177ab52f91ef3042d9a01ae}\label{servidor_8cpp_a57545cfd6177ab52f91ef3042d9a01ae}} 
+\index{servidor.\+cpp@{servidor.\+cpp}!exists@{exists}}
+\index{exists@{exists}!servidor.\+cpp@{servidor.\+cpp}}
+\subsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily bool exists (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{jugador_8h_ab6104b89642419db4e355b7b2e40abbe}{J\+S\+ON}} \&}]{json,  }\item[{const std\+::string \&}]{key }\end{DoxyParamCaption})}
+
+
+
+exists Comprobación para ver si existe el mns 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & \\
+\hline
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+mensaje 
+\end{DoxyReturn}
+\mbox{\Hypertarget{servidor_8cpp_ab68188d05da5120525d47223630b928f}\label{servidor_8cpp_ab68188d05da5120525d47223630b928f}} 
+\index{servidor.\+cpp@{servidor.\+cpp}!logout@{logout}}
+\index{logout@{logout}!servidor.\+cpp@{servidor.\+cpp}}
+\subsubsection{\texorpdfstring{logout()}{logout()}}
+{\footnotesize\ttfamily void logout (\begin{DoxyParamCaption}\item[{ix\+::\+Web\+Socket $\ast$}]{web\+Socket }\end{DoxyParamCaption})}
+
+
+
+F\+U\+N\+C\+IÓN P\+A\+RA H\+A\+C\+ER L\+O\+G\+IN EN LA A\+PP. 
+
+logout Función para salir del programa 
+\begin{DoxyParams}{Parameters}
+{\em web\+Socket} & --$>$ conexión \\
+\hline
+\end{DoxyParams}
+comprobar que el usuario y la contraseña son correctos \mbox{\Hypertarget{servidor_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{servidor_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{servidor.\+cpp@{servidor.\+cpp}!main@{main}}
+\index{main@{main}!servidor.\+cpp@{servidor.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+main Función principal del programa 
+
+Para conectar la bbdd
+
+Traducción
+
+Conectar la bbdd\+:
+
+Método para crear una jugada nueva.
+
+1) Comprobar datos obligatorios 2) Verificaciones. 3) Inserción en Base de datos 4) Comprobar errores. 5) Enviar mensaje con respuesta al cliente.
+
+Traducción
+
+Text format
+
+C\+O\+M\+P\+R\+O\+B\+A\+C\+IÓN SI EL M\+NS ES VÁ\+L\+I\+DO 

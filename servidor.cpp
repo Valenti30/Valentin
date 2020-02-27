@@ -11,9 +11,27 @@
 #include "servidor.h"
 #include "usuario.h"
 
+/*! \file */
+
+/*! \mainpage Documentación de eBOARD
+ * eBOARD es una aplicación para entrenadores
+ *
+ * Hoy por hoy se encuentra en fase de desarrollo
+ *
+ * \version 0.1
+ *
+ **/
+
+
 ///variables necesarias
 bool g_logueado;
 int g_id_usuario;
+
+/**
+ * @brief Servidor::Servidor Constructor
+ * @param puerto --> a donde conectarse
+ */
+
 Servidor::Servidor(int puerto)
 {
     this->m_puerto = puerto;
@@ -23,13 +41,19 @@ Servidor::Servidor(int puerto)
  using JSON = nlohmann::json;
  static int idServer = 0;
  //Esto sirve para ver si existe el mensaje
+ /**
+  * @brief exists Comprobación para ver si existe el mns
+  * @param json
+  * @param key
+  * @return mensaje
+  */
  bool exists (const JSON& json, const std::string& key)
  {
      return json.find(key) != json.end();
  }
 
  ///FUNCIÓN PARA HACER LOGIN EN LA APP
-
+/*
  void login(ix::WebSocket *webSocket, JSON received){
      std::string user;
      std::string pass;
@@ -80,7 +104,12 @@ Servidor::Servidor(int puerto)
          respuesta["errorMessage"] = "El usuario no existe";
      } //end if
  }
+*/
 
+ /**
+  * @brief logout Función para salir del programa
+  * @param webSocket --> conexión
+  */
 
  void logout(ix::WebSocket *webSocket){
      ///comprobar que el usuario y la contraseña son correctos
@@ -95,7 +124,11 @@ Servidor::Servidor(int puerto)
      g_logueado = false;
  }
 
-
+ /**
+  * @brief crearUsuario Función para crear usuarios
+  * @param webSocket --> conexion
+  * @param received --> lo que recibe el cliente
+  */
 
  void crearUsuario(ix::WebSocket *webSocket, JSON received){
      std::string user_name;
@@ -104,7 +137,7 @@ Servidor::Servidor(int puerto)
      received["usuario"].get_to(user_name);
      received["password"].get_to(user_pass);
 
-     usuario u;
+     Usuario u;
      u.setUser(QString::fromUtf8(user_name.c_str()));
      u.setPass(QString::fromUtf8(user_pass.c_str()));
 
@@ -120,7 +153,7 @@ Servidor::Servidor(int puerto)
      webSocket->send(messageToSend); //enviar JSON al cliente
  }
 
- void crearJugador(ix::WebSocket *webSocket, JSON received){
+/* void crearJugador(ix::WebSocket *webSocket, JSON received){
      std::string nombre_jugador;
      std::string apellidos_jugador;
      std::string dni_jugador;
@@ -154,7 +187,7 @@ Servidor::Servidor(int puerto)
 
      std::string messageToSend = jsonMessage.dump();//convertido a JSON
      webSocket->send(messageToSend); //enviar JSON al cliente
- }
+ }*/
 
 ///1:
      /*JSON crearJugador(JSON recibido)
@@ -188,6 +221,9 @@ Servidor::Servidor(int puerto)
     return jsonMessage;
 }
 
+  /**
+  * @brief main Función principal del programa
+  */
 
  int main(int argc, char *argv[])
  {
@@ -230,8 +266,10 @@ Servidor::Servidor(int puerto)
                           JSON jsonmessage=
                           {
                               {"type", "1"},
-                              {"Message", "Hola"}
+                              {"Message", "Hello, this is the page of the client"}
+
                           };
+                          qDebug() << QObject::tr("Hello, this is the terminal of QT Creator");
 
                          ///Método para crear una jugada nueva.
                           //void crearJugada(object)
@@ -292,6 +330,8 @@ Servidor::Servidor(int puerto)
                                                  auto receivedObject = JSON::parse(msg->str);
 
                                                  ///COMPROBACIÓN SI EL MNS ES VÁLIDO
+                                                 Usuario usuario;
+                                                 Jugador jugador;
                                                  if(exists(receivedObject, "message"))
                                                  {
                                                      JSON respuesta;
@@ -300,11 +340,19 @@ Servidor::Servidor(int puerto)
                                                  }
                                                  if (exists(receivedObject, "action")) {
                                                      if (receivedObject["action"] =="crearJugador") {
-                                                         crearJugador(webSocket.get() , receivedObject);
+                                                         jugador.load(receivedObject);
+                                                         jugador.save();
                                                      }
 
                                                      if (receivedObject["action"] =="crearStaff"){
                                                          webSocket->send(crearStaff(receivedObject).dump());
+                                                    }
+
+
+                                                     if (receivedObject["action"] =="crearUsuario"){
+                                                         usuario.load(receivedObject);
+                                                         usuario.save();
+                                                         //webSocket->send(crearUsuario(receivedObject).dump());
                                                     }
 
                                                      if (receivedObject["action"] =="iniciarSesion"){

@@ -11,5 +11,9 @@
         <source>Bye bye connection</source>
         <translation>Conexion finalizada</translation>
     </message>
+    <message>
+        <source>Hello, this is the terminal of QT Creator</source>
+        <translation>Hola, este es el terminal de QT Creator</translation>
+    </message>
 </context>
 </TS>

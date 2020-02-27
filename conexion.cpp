@@ -1,4 +1,14 @@
-#include "conexion.h"
+
+/*! \file */
+
+//! Clase conexion
+ /*! La clase conexion al final no la uso, implementé la conexión de la bbdd en la clase
+  * del servidor. Lo replanteé de diferente forma y al final no ha sido necesaria.
+  * No la borra ya que a lo mejor si replanteo la idea podría necesitarla.
+ */
+
+
+/*#include "conexion.h"
 #include <iostream>
 #include <QFile>
 #include <QIODevice>
@@ -88,4 +98,5 @@ void Conexion::close()
 
     m_db.close();
 
-}
+}*/
+

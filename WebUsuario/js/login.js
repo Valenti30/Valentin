@@ -37,13 +37,53 @@ function cerrarCapa()
     el.style.display = "none"; 
 
 }
+function cerrarCapa2()
+{
+    var el = document.getElementById("id02"); 
+    el.style.display = "none"; 
+
+}
+function cerrarCapa3()
+{
+    var el = document.getElementById("id03"); 
+    el.style.display = "none"; 
+
+}
+
 
 window.onload = function(){
     cerrarCapa();
     
 }
 
+function crearUsuario(){
 
+    var usuarioValue = document.getElementById("usuario").value;
+    var passValue = document.getElementById("password").value;
+    var typeValue = "crearUsuario";
+    //id mensaje cliente
+    var Json = {action: typeValue , usuario: usuarioValue , password: passValue};
+    socket.send(JSON.stringify(Json));
+    
+}
+
+function crearJugador()
+{
+    id_jugador++;
+    var id_mensaje = dameIdMensaje();
+    var nombreValue = document.getElementById("nombre").value
+    var apellidosValue = document.getElementById("apellidos").value;
+    var dniValue = document.getElementById("dni").value;
+    var dorsalValue = document.getElementById("dorsal").value;
+    var posicionValue = document.getElementById("posicion").value;
+    var emailValue = document.getElementById("email").value;
+
+    var Json = {action: "crearJugador", nombre: nombreValue, apellidos: apellidosValue, dni: dniValue, dorsal: dorsalValue, posicion: posicionValue, email: emailValue};
+    socket.send(JSON.stringify(Json));
+
+}
+
+/*
 function crearJugador(item)
 {
     
@@ -78,3 +118,4 @@ window.onclick = function(event) {
   }
 }
 }
+*/

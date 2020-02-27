@@ -4,14 +4,26 @@
 #include <QString>
 #include <QSqlQuery>
 #include <QVariant>
+#include "json.hpp"
 
-class usuario
+/*! \file */
+
+//! Clase usuario
+ /*! La clase usuario hace referencia a la tabla 'usuarios' de la BBDD
+  * Aquí, encontraremos las funcionalidades para poder cargar, crear y
+  * actualizar nuevos registros en la tabla.
+ */
+
+
+using JSON = nlohmann::json;
+
+class Usuario
 {
 
 private:
-    int m_idUser = 0;
-    QString m_user;
-    QString m_pass;
+    int m_idUser = 0;         /*!< Id del usuario. */
+    QString m_user;           /*!< nombre del usuario. */
+    QString m_pass;           /*!< contraseña del usuario. */
 
 public:
     ///GET
@@ -27,6 +39,7 @@ public:
     ///BBDD conectores
     bool save();
     void load(int id);
+    void load(JSON received);
 
 
 };

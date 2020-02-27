@@ -7,19 +7,28 @@
 #include <QVariant>
 #include "json.hpp"
 
+/*! \file */
+
+//! Clase jugador
+ /*! La clase jugador hace referencia a la tabla 'jugadores' de la BBDD
+  * Aquí, encontraremos las funcionalidades para poder cargar, crear y
+  * actualizar nuevos registros en la tabla.
+ */
+
+
 using JSON = nlohmann::json;
 
 class Jugador
 {
 
 private:
-    int m_idJugador = 0;
-    QString m_nombre;
-    QString m_apellidos;
-    QString m_dni;
-    int m_dorsal;
-    int m_posicion;
-    QString m_email;
+    int m_idJugador = 0;        /*!< Id del jugador. */
+    QString m_nombre;           /*!< nombre del jugador. */
+    QString m_apellidos;        /*!< apellidos del jugador. */
+    QString m_dni;              /*!< dni del jugador. */
+    int m_dorsal;               /*!< dorsal del jugador. */
+    int m_posicion;             /*!< posicion del jugador: BASE: 1, ALERO: 2, ESCOLTA: 3, ALA-PIVOT: 4, PIVOT: 5 */
+    QString m_email;            /*!< email del jugador. */
 
 public:
     ///GET
@@ -42,6 +51,7 @@ public:
     ///BBDD connectors
      bool save();
      void load(int id);
+     void load(JSON received);
 
 
 
