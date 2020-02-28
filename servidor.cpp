@@ -26,6 +26,11 @@
 ///variables necesarias
 bool g_logueado;
 int g_id_usuario;
+int g_idMsgServer{0};
+
+int nuevoID(){
+    return g_idMsgServer++;
+}
 
 /**
  * @brief Servidor::Servidor Constructor
@@ -230,7 +235,6 @@ Servidor::Servidor(int puerto)
      QCoreApplication a(argc, argv);
      g_logueado = false;
     QTranslator myappTranslator;
-    //myappTranslator.load("myapp_" + QLocale::system().name());
     myappTranslator.load("myapp_es_ES", "../servidorAplicacionBaloncesto");
     a.installTranslator(&myappTranslator);
 
@@ -356,7 +360,9 @@ Servidor::Servidor(int puerto)
                                                     }
 
                                                      if (receivedObject["action"] =="iniciarSesion"){
-                                                         webSocket->send(iniciarSesion(receivedObject).dump());
+                                                         usuario.load(receivedObject);
+                                                         webSocket->send(usuario.loguear(nuevoID()).dump());
+
                                                     }
                                                  }
 

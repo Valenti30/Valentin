@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['valentin_20gracia_20sastre',['Valentin Gracia Sastre',['../md_ResumenEBOARD.html',1,'']]]
+  ['resumeneboard',['ResumenEBOARD',['../md_ResumenEBOARD.html',1,'']]]
 ];

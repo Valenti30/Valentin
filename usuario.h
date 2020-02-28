@@ -40,6 +40,7 @@ public:
     bool save();
     void load(int id);
     void load(JSON received);
+    JSON loguear(int id_Server);
 
 
 };

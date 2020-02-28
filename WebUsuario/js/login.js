@@ -22,11 +22,16 @@ var usuario;
 
 function iniciarSesion()
 {
-    var nombre=document.getElementById("usuario_login").value;
-    var pass=document.getElementById("contrasenya_login").value;
-    var Json = {action: "iniciarSesion",nombre: nombre, contrasenya: pass};
-    socket.send(JSON.stringify(Json));
-    
+    if(getLogeado() == false){
+        var nombre=document.getElementById("usuario_login").value;
+        var pass=document.getElementById("contrasenya_login").value;
+        if(document.getElementById("usuario_login").value != "" || document.getElementById("contrasenya_login").value != ""){
+            var Json = {action: "iniciarSesion", usuario: nombre, password: pass};
+            socket.send(JSON.stringify(Json));
+        
+        }
+    }
+
     console.log(nombre);
     console.log(pass);
 }

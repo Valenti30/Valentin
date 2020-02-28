@@ -1,3 +1,4 @@
+
 .menuCSS3 ul {
 		display: flex;
 		padding: 0;
@@ -20,5 +21,11 @@
 	.menuCSS3 ul li a:hover + ul, .menuCSS3 ul li ul:hover {
 		display: block;
 	}
+	body{
+        
+	background-image: url(../img/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
 
-
+	

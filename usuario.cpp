@@ -107,3 +107,32 @@ void Usuario::load(int id){
 
 }
 
+JSON Usuario::loguear(int id_Server){
+    JSON respuesta;
+    respuesta["id_Servidor"] = id_Server;
+    QSqlQuery q2;
+    q2.prepare("SELECT * from usuarios WHERE usuario = :nombre and pass = :password");
+    q2.bindValue(":nombre", m_user);
+    q2.bindValue(":password", m_pass);
+
+    bool result {q2.exec()};
+
+    qDebug() << result;
+    qDebug() << q2.lastError();
+
+    if (result) {
+        if(q2.next()){
+            respuesta["respuesta"] = "te has logueado con éxito";
+        }else{
+            respuesta["respuesta"] = "la contraseña y el usuario no coinciden";
+        }
+    }//end if
+    return  respuesta;
+}
+
+
+
+
+
+
+

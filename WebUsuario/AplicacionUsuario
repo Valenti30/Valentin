@@ -21,6 +21,12 @@ socket.onopen = function(e) {
 var g_idMensaje = 0;
 var id_jugador = 0;
 var id_staff = 0;
+var g_logeado = false;
+
+function getLogeado(){
+return g_logeado;
+}
+
 
 function dameIdMensaje()
 {
@@ -53,16 +59,6 @@ function crearStaff()
     socket.send(JSON.stringify(mensajeJSON));
 
 }
-function iniciarSesion()
-{
-    var nombre=document.getElementById("usuario_login").value;
-    var pass=document.getElementById("contrasenya_login").value;
-    var Json = {action: "iniciarSesion",nombre: nombre, contrasenya: pass};
-    socket.send(JSON.stringify(Json));
-    
-    console.log(nombre);
-    console.log(pass);
-}
 
 socket.onmessage = function(event) {     //Lo que ejecutamos cuando se recibe un mensaje.
   //console.log(`[message] Data received from server: ${event.data}`);
@@ -77,6 +73,14 @@ socket.onmessage = function(event) {     //Lo que ejecutamos cuando se recibe un
   {
     console.log(object.respuesta);
     console.log(object.datos);
+  }
+  
+  if (object.respuesta == "te has logueado con éxito"){
+    g_logeado = true;
+  }
+  
+  if (object.respuesta == "se ha cerrado sesión"){
+    g_logeado = false;
   }
   console.log(object);
 
@@ -107,13 +111,13 @@ socket.onerror = function(error) {
 		<ul>
 			<li><a href="#">Menú</a>
 				<ul>
-					<li><a href="#">Mi equipo</a></li>
-					<li><a href="#">Mi staff</a></li>
+					<li><a onclick="document.getElementById('id01').style.display='block'">Login</a></li>
+					<li><a onclick="document.getElementById('id02').style.display='block'">Registrarse</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Crear</a>
 				<ul>
-					<li><a href="#">Crear jugador</a></li>
+					<li><a onclick="document.getElementById('id03').style.display='block'">Crear jugador</a></li>
 					<li><a href="#">Crear personal staff</a></li>
 				</ul>
 			</li>
@@ -127,22 +131,15 @@ socket.onerror = function(error) {
 					<li><a href="#">Crear equipo visitante</a></li>
 				</ul>
 			</li>
-			<li><a href="#">Configuración</a>
-				<ul>
-					<li><a href="#">Estadísticas temporada</a></li>
-					<li><a href="#">Estadísticas partido anterior</a></li>
-					<li><a href="#">Análisis tiro temporada</a></li>
-					<li><a href="#">Análisis tiro jugador</a></li>
-				</ul>
-			</li>
 		</ul>
 	</nav>
    <!-- Button to open the modal login form -->
-<button onclick="document.getElementById('id01').style.display='block'">Login</button>
+   
+<!--<button onclick="document.getElementById('id01').style.display='block'">Login</button>
 <button onclick="document.getElementById('id02').style.display='block'">Registrarse</button>
-<button onclick="document.getElementById('id03').style.display='block'">Crear jugador</button>
+<button onclick="document.getElementById('id03').style.display='block'">Crear jugador</button>-->
 <!-- The Modal -->
-<div id="id01" class="modal">
+<div id="id01" class="modal" style="background-color:green;">
 <center><h1> eBOARD </h1></center>
   <span onclick="document.getElementById('id01').style.display='none'"
 class="close" title="Close Modal">&times;</span>
@@ -154,34 +151,35 @@ class="close" title="Close Modal">&times;</span>
        </div>
           <div  class="container" align="left"> 
             <label class="datos" for="uname"><b>Username</b></label>
-            <input id="usuario_login" type="text" placeholder="Enter Username" name="uname" required>
+            <input id="usuario_login" type="text" placeholder="Usuario" name="uname" required>
             <br>
             <br>
             <br>
             <label for="psw"><b>Password</b></label>
-            <input id="contrasenya_login" type="password" placeholder="Enter Password" name="psw" required>
+            <input id="contrasenya_login" type="password" placeholder="Contraseña" name="psw" required>
             <br>
             <br>
             <button id="log" onclick="cerrarCapa() , iniciarSesion()">Login</button>
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancelar</button>
             <br>
             <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
+                <input type="checkbox" checked="checked" name="remember"> Guardar credenciales
             </label><br><br>
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
+            <span class="psw">Olvidaste tu <a href="#">contraseña?</a></span>
         </div> 
     </div>
 </div> 
-<div id = "id02" class="modal">
+<div id = "id02" class="modal" style="background-color:green;">
 <center>
     <h1>Registro</h1>
     <center><input id = "usuario" type = "text" placeholder="nombre de usuario"></input></center><br><br>
     <input id = "password" type = "password" placeholder="contraseña"></input><br><br>
     <button onclick = cerrarCapa2(),crearUsuario()>Registrar</button>
+    <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancelar</button>
 </center>
 </div>
 
-<div id = "id03" class="modal">
+<div id = "id03" class="modal" style="background-color:green;">
 <center>
     <h1>Crear Jugador</h1>
     <input id = "nombre" type = "text" placeholder = "nombre del jugador"> </input> <br><br>
@@ -191,7 +189,9 @@ class="close" title="Close Modal">&times;</span>
     <input id = "posicion" type = "text" placeholder = "posicion del jugador"> </input> <br><br>
     <input id = "email" type = "text" placeholder = "email del jugador"> </input> <br><br>
     <button onclick = cerrarCapa3(),crearJugador()>Crear jugador</button>
+    <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancelar</button>
 </center>
+</form>
 </div>
 </header>
 </body>
