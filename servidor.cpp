@@ -46,6 +46,7 @@ Servidor::Servidor(int puerto)
  using JSON = nlohmann::json;
  static int idServer = 0;
  //Esto sirve para ver si existe el mensaje
+
  /**
   * @brief exists Comprobación para ver si existe el mns
   * @param json
@@ -245,6 +246,17 @@ Servidor::Servidor(int puerto)
 
 
      ix::WebSocketServer server(9990, "0.0.0.0");
+     ///Para hacer que nuestra página web sea segura.
+     /*ix::SocketTLSOptions tlsOptions;
+     tlsOptions.tls = true;
+     tlsOptions.certFile = "./cert/localhost.crt";
+     tlsOptions.keyFile = "./cert/localhost.key";
+     tlsOptions.caFile = "NONE";
+
+     if (tlsOptions.isValid()){
+         std::cerr << "SSL valid" << std::endl;
+     }
+     server.setTLSOptions(tlsOptions);*/
 
      server.setOnConnectionCallback(
         [&server, &db, &conectado](std::shared_ptr<ix::WebSocket> webSocket,

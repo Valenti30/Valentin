@@ -68,3 +68,12 @@ En estos momentos la aplicación se encuentra en desarrollo, las funciones que s
 Por la presente, se otorga permiso, de forma gratuita, a cualquier persona que obtenga una copia de este software y los archivos de documentación asociados (el "Software"),
 para negociar el Software sin restricciones, incluidos, entre otros, los derechos de uso, copia, modificación, fusión, publicar, distribuir, sublicenciar y / o vender copias del Software,
 y permitir que las personas a quienes se les proporcione el Software lo hagan.
+
+## Gestión de errores
+
+- Problemas al conectar la base de datos con el servidor, conectar cliente y servidor.
+- Problemas para hacer las traducciones, me faltaba el paso de distribuir para que funcionaran.
+- Problemas con el lenguaje javaScript, ya que no tenia conocimientos previos.
+- Problemas al recoger los datos de un mensaje JSON.
+- Problemas para hacer el certificado, la clave pública ascii.
+

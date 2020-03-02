@@ -105,7 +105,7 @@ socket.onerror = function(error) {
 </script>
 </head>
 <body>
-<h1>eBOARD </h1>
+<center><h1>eBOARD </h1></center>
     <header>
     	<nav class="menuCSS3">
 		<ul>
