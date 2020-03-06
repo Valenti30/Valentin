@@ -16,6 +16,10 @@ QString Jugador::getNombre(){
     return m_nombre;
 }
 
+Jugador::Jugador(){
+
+}
+
 /**
  * @brief Obtener los apellidos del jugador
  * @return apellidos del jugador
@@ -118,14 +122,14 @@ void Jugador::setEmail(QString email){
  * @return Si se ha realizado la consulta sin errores
  */
 
-bool Jugador::save(){
+bool Jugador::save(int idUsuario){
 
     QSqlQuery q;
 
     //UPDATE
     if (m_idJugador > 0){
         qDebug() << "Update";
-        q.prepare("UPDATE jugadores SET nombre = :nombre, apellidos = :apellidos, dni = :dni, dorsal = :dorsal, posicion = :posicion, email = :email");
+        q.prepare("UPDATE jugadores SET nombre = :nombre, apellidos = :apellidos, dni = :dni, dorsal = :dorsal, posicion = :posicion, email = :email WHERE idjugadores = :idjugador");
         q.bindValue(":idjugador", m_idJugador);
         q.bindValue(":nombre", m_nombre);
         q.bindValue(":apellidos", m_apellidos);
@@ -133,19 +137,22 @@ bool Jugador::save(){
         q.bindValue(":dorsal", m_dorsal);
         q.bindValue(":posicion", m_posicion);
         q.bindValue(":email", m_email);
-
+        q.next();
     }
     else
     {
     //INSERT
         qDebug() << "Insert";
-        q.prepare("INSERT INTO jugadores (nombre, apellidos, dni, dorsal, posicion, email) VALUES (:nombre, :apellidos, :dni, :dorsal, :posicion, :email)");
+
+        q.prepare("INSERT INTO jugadores (nombre, apellidos, dni, dorsal, posicion, email , idusuario) VALUES (:nombre, :apellidos, :dni, :dorsal, :posicion, :email , :idUsuario)");
         q.bindValue(":nombre", m_nombre);
         q.bindValue(":apellidos", m_apellidos);
         q.bindValue(":dni", m_dni);
         q.bindValue(":dorsal", m_dorsal);
         q.bindValue(":posicion", m_posicion);
         q.bindValue(":email", m_email);
+        q.bindValue(":idUsuario", idUsuario);
+        q.next();
     }//end if
 
     bool result {q.exec()};
@@ -179,8 +186,9 @@ void Jugador::load(int id)
 {
 
     QSqlQuery q;
-    q.prepare("SELECT * FROM jugador where id = :idJugador LIMIT 1");
+    q.prepare("SELECT * FROM jugadores where idjugadores = :idJugador LIMIT 1");
     q.bindValue(":idJugador", id);
+    q.next();
     bool result {q.exec()};
     qDebug() << q.size();
 
@@ -195,6 +203,57 @@ void Jugador::load(int id)
         m_posicion = q.value("posicion").toInt();
         m_email = q.value("email").toString();
 
-        qDebug() << m_nombre + m_apellidos + m_dni + m_dorsal + m_posicion + m_email;
+    }else {
+        qDebug() << q.lastError().text();
     } //end if
 }
+
+JSON Jugador::lista(int idUsuario, JSON cliente , int idServer){
+    QSqlQuery q;
+    q.prepare("SELECT * FROM jugadores WHERE idusuario = :idUsuario");
+    q.bindValue(":idUsuario" , idUsuario);
+    q.next();
+
+    JSON respuesta;
+    respuesta["idServidor"] = idServer;
+    respuesta["idCliente"] = cliente["id_Cliente"];
+    bool result {q.exec()};
+    if (result){
+            while(q.next()){
+                Jugador jugador;
+                jugador.load( q.value("idjugadores").toInt());
+
+
+                if(jugador.m_idJugador > 0){
+                    respuesta["jugadores"].push_back(toJSON(jugador));
+                }
+            }
+        }else {
+            qDebug() << q.lastError().text();
+        }
+
+        if(q.size() > 0){
+            qDebug() << "hola";
+            respuesta["respuesta"] = "listado de jugadores";
+        }else {
+            qDebug() << "caracola";
+            respuesta["respuesta"] = "no hay jugadores";
+        }
+
+return respuesta;
+}
+
+JSON Jugador::toJSON(Jugador jugador){
+    JSON jugadorJSON;
+    jugadorJSON["jugador"]["idJugador"] = jugador.m_idJugador;
+    jugadorJSON["jugador"]["nombre"] = jugador.m_nombre.toStdString();
+    jugadorJSON["jugador"]["apellidos"] = jugador.m_apellidos.toStdString();
+    jugadorJSON["jugador"]["dni"] = jugador.m_dni.toStdString();
+    jugadorJSON["jugador"]["dorsal"] = jugador.m_dorsal;
+    jugadorJSON["jugador"]["posicion"] = jugador.m_posicion;
+    jugadorJSON["jugador"]["email"] = jugador.m_email.toStdString();
+    return jugadorJSON;
+}
+
+
+

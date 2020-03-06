@@ -26,6 +26,7 @@ private:
     QString m_pass;           /*!< contraseña del usuario. */
 
 public:
+    Usuario();
     ///GET
     int getUserId();
     QString getUser();
@@ -42,6 +43,8 @@ public:
     void load(JSON received);
     JSON loguear(int id_Server);
 
+    ///RESPUESTAS
+    JSON RespuestaRegistro(int id_Server , JSON cliente , bool ok);
 
 };
 

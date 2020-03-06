@@ -23,7 +23,7 @@ SOURCES += \
     jugador.cpp \
     usuario.cpp
 
-LIBS += -pthread -lz
+LIBS += -pthread -lz #-lssl -lcrypto
 
 HEADERS += \
     json.hpp \
@@ -44,8 +44,3 @@ else:unix: LIBS += -L$$PWD/compiled/lib/ -lixwebsocket
 INCLUDEPATH += $$PWD/compiled/include
 DEPENDPATH += $$PWD/compiled/include
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/compiled/lib/release/libixwebsocket.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/compiled/lib/debug/libixwebsocket.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/compiled/lib/release/ixwebsocket.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/compiled/lib/debug/ixwebsocket.lib
-else:unix: PRE_TARGETDEPS += $$PWD/compiled/lib/libixwebsocket.a

@@ -16,37 +16,42 @@ class Usuario {
 
 var usuario;
 
+//socket.oneError(){
 
+    
+//}
 
+function entrar(){
 
+    document.getElementById("id01").style.display = "none"; 
+    document.getElementById("id02").style.display = "none"; 
+    document.getElementById("marcador").style.display = "none";
+    document.getElementById("principal").style.display = "block"; 
+    document.getElementById("contenido").style.display = "block";
+}
 
 function iniciarSesion()
 {
-    if(getLogeado() == false){
+    
         var nombre=document.getElementById("usuario_login").value;
         var pass=document.getElementById("contrasenya_login").value;
         if(document.getElementById("usuario_login").value != "" || document.getElementById("contrasenya_login").value != ""){
             var Json = {action: "iniciarSesion", usuario: nombre, password: pass};
             socket.send(JSON.stringify(Json));
         
-        }
-    }
+}
+    
 
     console.log(nombre);
     console.log(pass);
 }
 
-function cerrarCapa()
-{
-    var el = document.getElementById("id01"); 
-    el.style.display = "none"; 
-
-}
 function cerrarCapa2()
 {
     var el = document.getElementById("id02"); 
     el.style.display = "none"; 
 
+    document.getElementById("id01").style.display = "block";
 }
 function cerrarCapa3()
 {
@@ -54,22 +59,61 @@ function cerrarCapa3()
     el.style.display = "none"; 
 
 }
-
-
-window.onload = function(){
-    cerrarCapa();
-    
+function cerrarCapa4()
+{
+    var el = document.getElementById("id03"); 
+    el.style.display = "none"; 
+    var la = document.getElementById("id04"); 
+    la.style.display = "block"; 
+}
+function cerrarCapa5()
+{
+    var el = document.getElementById("marcador"); 
+    el.style.display = "none"; 
+    var la = document.getElementById("principal"); 
+    la.style.display = "block"; 
+    var le = document.getElementById("contenido"); 
+    le.style.display = "block"; 
 }
 
-function crearUsuario(){
+function logout()
+{
+    var ja = document.getElementById("principal"); 
+    ja.style.display = "none"; 
+    
+    var ju = document.getElementById("contenido"); 
+    ju.style.display = "none"; 
+    var el = document.getElementById("id03"); 
+    el.style.display = "none"; 
+    var la = document.getElementById("id04"); 
+    la.style.display = "none"; 
+    var li = document.getElementById("id02"); 
+    li.style.display = "none";
+    var lo = document.getElementById("id01"); 
+    lo.style.display = "block";
+     var Json = {action: "logout"};
+    socket.send(JSON.stringify(Json));
+}
 
+/*window.onload = function(){
+    cerrarCapa();
+    
+}*/
+
+function crearUsuario(){
+    
+    var id_mensaje = dameIdMensaje();
     var usuarioValue = document.getElementById("usuario").value;
     var passValue = document.getElementById("password").value;
     var typeValue = "crearUsuario";
-    //id mensaje cliente
-    var Json = {action: typeValue , usuario: usuarioValue , password: passValue};
-    socket.send(JSON.stringify(Json));
+    if(usuarioValue != "" && passValue != ""){
+        var Json = {id_Cliente: id_mensaje ,action: typeValue , usuario: usuarioValue , password: passValue};
+        socket.send(JSON.stringify(Json));
+    }else{
     
+        document.getElementById("error").style.display = "block";
+    }
+
 }
 
 function crearJugador()
@@ -81,46 +125,65 @@ function crearJugador()
     var dniValue = document.getElementById("dni").value;
     var dorsalValue = document.getElementById("dorsal").value;
     var posicionValue = document.getElementById("posicion").value;
+    var posicionNumero = posicionValue.split("-");
     var emailValue = document.getElementById("email").value;
-
-    var Json = {action: "crearJugador", nombre: nombreValue, apellidos: apellidosValue, dni: dniValue, dorsal: dorsalValue, posicion: posicionValue, email: emailValue};
-    socket.send(JSON.stringify(Json));
-
-}
-
-/*
-function crearJugador(item)
-{
     
-    var seccion = document.getElementsByClassName("jugador")[0];
-    var articulo = document.createElement("JUGADOR");
-            
-    var imagen = document.createElement("IMG");
-    imagen.setAttribute("src", "img/alberto.jpg");
-    figure.appendChild(imagen);
-            
-    var lista = document.createElement("UL");
-    var nombre = document.createElement("LI");
-    nombre.innerHTML = item.nombre;
-    lista.appendChild(nombre);
-    var apellido = document.createElement("LI");
-    apellido.innerHTML = item.apellido;
-    lista.appendChild(apellido);
-
-    articulo.appendChild(figure);
-    articulo.appendChild(lista);
-    seccion.appendChild(articulo);
+    var comprobar1 = /^([1-9][1-9][1-9][1-9][1-9][1-9][1-9][1-9][a-zA-Z])$/.test(dniValue);
+    var comprobar2 = /^([1-9][1-9]*)$/.test(dorsalValue);
+    var comprobar3 = /^([a-zA-Z][a-zA-Z1-9]*@[a-zA-Z][a-zA-Z1-9]+)$/.test(emailValue);
+    
+    if(nombreValue != "" && apellidosValue != "" && dniValue != "" && dorsalValue != "" && posicionValue != "" && posicionNumero != "" && emailValue != ""){
+        if(comprobar1 && comprobar2 && comprobar3){
+            var Json = {id_Cliente: id_mensaje, action: "crearJugador", nombre: nombreValue, apellidos: apellidosValue, dni: dniValue, dorsal: dorsalValue, posicion: posicionNumero[0], email: emailValue};
+            socket.send(JSON.stringify(Json));
+            cerrarCapa3();
+        }
+    }
+    
 
 
- 
-// Get the modal
-var modal = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
 }
+
+function listarJugadores(){
+
+    var id_mensaje = dameIdMensaje();
+    var Json = {id_Cliente: id_mensaje , action : "listarJugadores"};
+    socket.send(JSON.stringify(Json));
+    
 }
-*/
+
+function llenarListas(array1){
+
+    array1.forEach(element => recogerDatos(element));
+}
+
+function recogerDatos(element){
+    var lista = document.getElementById("lista");
+    var id = element.jugador.idJugador;
+    var nombre = element.jugador.nombre;
+    var apellidos = element.jugador.apellidos;
+    var dni = element.jugador.dni;
+    var dorsal = element.jugador.dorsal;
+    var posicion = element.jugador.posicion;
+    var email = element.jugador.email;
+    var option = document.createElement("option");
+    option.text = "*ID:*   "+ id + "   *Nombre:*   "+ nombre + "   *Apellidos:*   " + apellidos + "    *Dni:*    "+ dni + "   *Dorsal:*   "+ dorsal + "   *Posición:*   " + posicion + "   *Email:*   " + email;
+    lista.add(option);
+}
+
+
+
+function mostrarRegistro()
+{
+
+    document.getElementById("id01").style.display= "none";
+    document.getElementById("id02").style.display = "block"; 
+}
+
+function marcador()
+{
+    document.getElementById("id01").style.display= "none";
+    document.getElementById("principal").style.display = "none";
+    document.getElementById("marcador").style.display = "block"; 
+}

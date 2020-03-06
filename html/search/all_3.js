@@ -1,12 +1,13 @@
 var searchData=
 [
-  ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
-  ['detector',['detector',['../structnlohmann_1_1detail_1_1detector.html',1,'nlohmann::detail']]],
-  ['detector_3c_20default_2c_20void_5ft_3c_20op_3c_20args_2e_2e_2e_20_3e_20_3e_2c_20op_2c_20args_2e_2e_2e_20_3e',['detector&lt; Default, void_t&lt; Op&lt; Args... &gt; &gt;, Op, Args... &gt;',['../structnlohmann_1_1detail_1_1detector_3_01Default_00_01void__t_3_01Op_3_01Args_8_8_8_01_4_01_4_00_01Op_00_01Args_8_8_8_01_4.html',1,'nlohmann::detail']]],
-  ['diff',['diff',['../classnlohmann_1_1basic__json.html#a9c4f3554773649beef69461a10a3de87',1,'nlohmann::basic_json']]],
-  ['difference_5ftype',['difference_type',['../classnlohmann_1_1detail_1_1iter__impl.html#a2f7ea9f7022850809c60fc3263775840',1,'nlohmann::detail::iter_impl::difference_type()'],['../classnlohmann_1_1basic__json.html#afe7c1303357e19cea9527af4e9a31d8f',1,'nlohmann::basic_json::difference_type()']]],
-  ['discarded',['discarded',['../namespacenlohmann_1_1detail.html#a1ed8fc6239da25abcaf681d30ace4985a94708897ec9db8647dfe695714c98e46',1,'nlohmann::detail']]],
-  ['diyfp',['diyfp',['../structnlohmann_1_1detail_1_1dtoa__impl_1_1diyfp.html',1,'nlohmann::detail::dtoa_impl']]],
-  ['dump',['dump',['../classnlohmann_1_1detail_1_1serializer.html#a95460ebd1a535a543e5a0ec52e00f48b',1,'nlohmann::detail::serializer::dump()'],['../classnlohmann_1_1basic__json.html#a50ec80b02d0f3f51130d4abb5d1cfdc5',1,'nlohmann::basic_json::dump()']]],
-  ['documentación_20de_20eboard',['Documentación de eBOARD',['../index.html',1,'']]]
+  ['g_5flogueado',['g_logueado',['../servidor_8cpp.html#a04c0f1d98cdfeb71fc9c9f71db524c78',1,'servidor.cpp']]],
+  ['getapellidos',['getApellidos',['../classJugador.html#aba79aff8e870ffe04bf5a4ffd94f5e5d',1,'Jugador']]],
+  ['getdni',['getDni',['../classJugador.html#abd65250f237f645c3f926e879b4740dd',1,'Jugador']]],
+  ['getdorsal',['getDorsal',['../classJugador.html#a7f67a27c34f24e618cdbfbebf29b8704',1,'Jugador']]],
+  ['getemail',['getEmail',['../classJugador.html#ac70026da85dea7d05eaaf8df72c4e8eb',1,'Jugador']]],
+  ['getnombre',['getNombre',['../classJugador.html#a326995f44b24a9a5247144868f2ba359',1,'Jugador']]],
+  ['getpass',['getPass',['../classUsuario.html#ae00ae9ee09459165c7b7ecb060ff7071',1,'Usuario']]],
+  ['getposicion',['getPosicion',['../classJugador.html#afd85bc493fbd7626cdee30d9a2e18fd2',1,'Jugador']]],
+  ['getuser',['getUser',['../classUsuario.html#a26932183472124e9054d95c534e6f7e9',1,'Usuario']]],
+  ['getuserid',['getUserId',['../classUsuario.html#a074a24d385ccca50f34b20840c6d6493',1,'Usuario']]]
 ];

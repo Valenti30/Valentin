@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title> eBOARD </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="widht=device-widht, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link href="css/estiloWebUsuario.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="css/login.css">
+<script src="js/login.js"></script>
+<script>
+let socket = new WebSocket("ws://127.0.0.1:9990");
+var idusuario = 0;
+
+socket.onopen = function(e) {
+  console.log("[open] Connection established");
+  console.log("Sending to server");
+  socket.send('{"message":"Entra"}');
+  console.log("Conexion abierta");
+};
+
+
+var g_idMensaje = 0;
+var id_jugador = 0;
+var id_staff = 0;
+
+
+
+function dameIdMensaje()
+{
+    g_idMensaje++;
+    return g_idMensaje;
+}
+
+/*function crearJugador()
+{
+    id_jugador++;
+    var id_mensaje = dameIdMensaje();
+    var nombre_jugador = "valen"; //document.getElementById(id).value
+    var apellidos_jugador = "gracia sastre";
+    var dni_jugador = "43231226N";
+    var dorsal_jugador = "13";
+    var posicion_jugador = "1";
+    var email_jugador = "valentingracia@estudiante.edib.es";
+
+    var mensajeJSON = {action: "crearJugador", id: id_mensaje, idJugador: id_jugador, nombre_jugador: nombre_jugador, apellidos_jugador: apellidos_jugador, dni_jugador: dni_jugador, dorsal_jugador: dorsal_jugador, posicion_jugador: posicion_jugador, email_jugador: email_jugador};
+    socket.send(JSON.stringify(mensajeJSON));
+
+}*/
+
+function crearStaff()
+{
+    id_staff++;
+    var id_mensaje = dameIdMensaje();
+
+    var mensajeJSON = {action: "crearStaff", id: id_mensaje, idStaff: id_staff};
+    socket.send(JSON.stringify(mensajeJSON));
+
+}
+
+socket.onmessage = function(event) {     //Lo que ejecutamos cuando se recibe un mensaje.
+  //console.log(`[message] Data received from server: ${event.data}`);
+  var object = JSON.parse(event.data);
+  if(object.action == "responseCrearJugador")
+  {
+    crearJugador(object);
+    console.log(object.respuesta);
+    console.log(object.datos);
+  }
+  if(object.action == "responseCrearStaff")
+  {
+    console.log(object.respuesta);
+    console.log(object.datos);
+  }
+  
+  if (object.respuesta == "te has logueado con éxito"){
+    entrar();
+     document.getElementById("usuario").value = "";
+     document.getElementById("errorLog").style.display = "none";
+     idusuario = object.idusuario;
+  }
+  
+    if (object.respuesta == "la contraseña y el usuario no coinciden"){
+        document.getElementById("errorLog").style.display = "block";
+    }
+  
+  if (object.respuesta == "se ha cerrado sesión"){
+    salir();
+    
+    document.getElementById("usuario").value = "";
+  }
+  
+  if (object.respuesta == "se ha producido un error"){
+    document.getElementById("error").style.display = "block";
+  }
+  //SEGUIR AQUÍ
+    if (object.respuesta == "listado de jugadores"){
+    document.getElementById("lista").length = 0;
+    array1 = object.jugadores;
+    llenarListas(array1);
+  }
+  
+  if (object.respuesta == "no hay jugadores"){
+    document.getElementById("lista").length = 0;
+  }
+  
+  if(object.respuesta == "usuario registrado con éxito"){
+    document.getElementById("error").style.display = "none";
+    cerrarCapa2();
+  }
+  console.log(object);
+
+
+  //document.getElementById("received_messages").innerHTML += "<div>" + object.message + "</div>";
+
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+  } else {
+    // e.g. server process killed or network down
+    // event.code is usually 1006 in this case
+    console.log('[close] Connection died');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
+</script>
+</head>
+<body>
+
+    <div id="id01" class="modal-content animate" action="/action_page.php">
+        <center><h1 style = "background-color: green"> eBOARD </h1></center>
+        <div class="imgcontainer">
+            <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+            <div  class="container" align="left"> 
+                <label class="datos" for="uname"><b>Username</b></label>
+                <input id="usuario_login" type="text" placeholder="Usuario" name="uname" required>
+                <br>
+                <br>
+                <br>
+                <label for="psw"><b>Password</b></label>
+                <input id="contrasenya_login" type="password" placeholder="Contraseña" name="psw" required>
+                <br>
+                <br>
+                <b id = "errorLog" style = "color: red; display: none">la contraseña y el usuario no coinciden</b>
+                <button id="log" onclick="iniciarSesion()">Login</button>
+                <br>
+                <br>
+                
+                <span class="psw"><button onclick = "mostrarRegistro()">No estoy registrado</button></span>
+            </div> 
+    </div>
+    
+    <div id = "id02" style = "display: none">
+            <center>
+                <h1>Registro</h1>
+                <center><input id = "usuario" type = "text" placeholder="nombre de usuario"></input></center><br><br>
+                <input id = "password" type = "password" placeholder="contraseña"></input><br><br>
+                <b id = "error" style = "color :  red ; display : none;">se ha producido un error</b> <br> <br>
+                <button onclick = crearUsuario()>Registrar</button>
+                <button type="button" onclick="cerrarCapa2()" class="cancelbtn">Cancelar</button> 
+            </center>
+    </div>
+
+
+
+
+    </div>
+    
+    <div id = "principal" style = "display: none">
+        <center><h1>eBOARD </h1></center>
+
+            <div id = "menu"> 
+                <nav class="menuCSS3">
+                    <ul>
+                        <li><a href="#">Menú</a>
+                            <ul>
+                                <li><a onclick="logout()">Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Jugador</a>
+                            <ul>
+                                <li><a onclick="document.getElementById('id03').style.display='block'">Crear jugador</a></li>
+                                <li><a onclick="listarJugadores(), cerrarCapa4()">Ver jugadores</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Entrenamiento</a>
+                            <ul>
+                                <li><a onclick="marcador()">Marcador</a></li>
+                            </ul>
+                        <li><a href="#">Equipos</a>
+                            <ul>
+                                <li><a href="#">Contrarios</a></li>
+                                <li><a href="#">Crear equipo visitante</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div id = "contenido">
+                    <div id = "id03" class="modal" style="background-color:green">
+                        <center>
+                            <h1>Crear Jugador</h1>
+                            <input id = "nombre" type = "text" placeholder = "nombre del jugador"> </input> <br><br>
+                            <input id = "apellidos" type = "text" placeholder = "apellidos del jugador"> </input> <br><br>
+                            <input id = "dni" type = "text" placeholder = "dni del jugador"> </input> <br><br>
+                            <input id = "dorsal" type = "number" placeholder = "dorsal del jugador" style = "width: 10%"> </input> <br><br>
+                            <select id = "posicion" placeholder = "posicion del jugador" style = "width: 11%"> 
+                                <option>1-Base</option>
+                                <option>2-Alero</option>
+                                <option>3-Escolta</option>
+                                <option>4-Ala-pivot</option>.
+                                <option>5-Pivot</option>
+                            </select> <br><br>
+                            <input id = "email" type = "email" placeholder = "email del jugador"> </input> <br><br>
+                            <button onclick = crearJugador()>Crear jugador</button>
+                            <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancelar</button>
+                        </center>
+                    </div>
+            </div>
+            
+            <div id= "id04" class="modal" style="background-color:green">
+                <center>
+                    <h1>Listado de jugadores</h1>
+                    <select id = "lista" size = "10" style = "width: 90%"></select> <br><br>
+                    <button type="button" onclick="document.getElementById('id04').style.display='none'" class="cancelbtn">Aceptar</button>
+                </center>
+            </div>
+
+    </div>
+    
+    <div id = "marcador" style="display: none">
+    <button type="button" id="btn-salir" onclick="cerrarCapa5()" class="cancelbtn">Salir</button>
+    </div>
+
+</body>
+</html>
+
+
+
+

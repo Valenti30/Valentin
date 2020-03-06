@@ -22,6 +22,10 @@ QString Usuario::getPass(){
     return m_pass;
 }
 
+int Usuario::getUserId(){
+    return m_idUser;
+}
+
 
 ///SET
 
@@ -41,6 +45,10 @@ void Usuario::setPass(QString pass){
     m_pass = pass;
 }
 
+
+Usuario::Usuario(){
+
+}
 ///OPERACIONES de la BBDD
 
 /**
@@ -73,6 +81,7 @@ bool Usuario::save(){
 
     qDebug() << result;
     qDebug() << q.lastError();
+    return result;
 }
 
 /**
@@ -93,16 +102,21 @@ void Usuario::load(JSON received){
 
 void Usuario::load(int id){
     QSqlQuery q;
-    q.prepare("SELECT * from usuario where id = :iduser LIMIT 1");
+    q.prepare("SELECT * from usuarios where idusuario = :iduser LIMIT 1");
     q.bindValue(":iduser", id);
+    q.next();
+
     bool result {q.exec()};
-    qDebug() << q.size();
+    qDebug() << "cargando...";
 
     if (result) {
         q.next();
         m_idUser = id;
         m_user = q.value("usuario").toString();
         m_pass = q.value("pass").toString();
+        qDebug() << m_idUser;
+    }else {
+        qDebug() << q.lastError().text();
     } //end if
 
 }
@@ -114,6 +128,7 @@ JSON Usuario::loguear(int id_Server){
     q2.prepare("SELECT * from usuarios WHERE usuario = :nombre and pass = :password");
     q2.bindValue(":nombre", m_user);
     q2.bindValue(":password", m_pass);
+    q2.next();
 
     bool result {q2.exec()};
 
@@ -122,12 +137,27 @@ JSON Usuario::loguear(int id_Server){
 
     if (result) {
         if(q2.next()){
+            qDebug() << "entra1";
             respuesta["respuesta"] = "te has logueado con éxito";
+            load(q2.value("idusuario").toInt());
         }else{
+            qDebug() << "entra2";
             respuesta["respuesta"] = "la contraseña y el usuario no coinciden";
         }
     }//end if
     return  respuesta;
+}
+
+JSON Usuario::RespuestaRegistro(int id_Server , JSON cliente , bool ok){
+    JSON respuesta;
+    respuesta["id_Servidor"] = id_Server;
+    respuesta["id_Cliente"] = cliente["id_Cliente"];
+    if(ok){
+        respuesta["respuesta"] = "usuario registrado con éxito";
+    }else{
+        respuesta["respuesta"] = "se ha producido un error";
+    }
+    return respuesta;
 }
 
 

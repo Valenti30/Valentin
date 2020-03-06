@@ -1,6 +1,6 @@
  /* The Modal (background) */
 .modal {
-    float:left;
+  float:left;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -34,9 +34,8 @@
     width: 50%;
     align-items: center;
     margin-left: 25%;
+    /*background-color: green;*/
     margin-top: 5%;
-    
-
 }
 
 /* The Close Button */

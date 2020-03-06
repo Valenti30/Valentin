@@ -233,8 +233,8 @@ Servidor::Servidor(int puerto)
 
  int main(int argc, char *argv[])
  {
-     QCoreApplication a(argc, argv);
-     g_logueado = false;
+    QCoreApplication a(argc, argv);
+    g_logueado = false;
     QTranslator myappTranslator;
     myappTranslator.load("myapp_es_ES", "../servidorAplicacionBaloncesto");
     a.installTranslator(&myappTranslator);
@@ -346,8 +346,7 @@ Servidor::Servidor(int puerto)
                                                  auto receivedObject = JSON::parse(msg->str);
 
                                                  ///COMPROBACIÓN SI EL MNS ES VÁLIDO
-                                                 Usuario usuario;
-                                                 Jugador jugador;
+
                                                  if(exists(receivedObject, "message"))
                                                  {
                                                      JSON respuesta;
@@ -355,9 +354,12 @@ Servidor::Servidor(int puerto)
                                                      webSocket->send(respuesta.dump());
                                                  }
                                                  if (exists(receivedObject, "action")) {
+                                                     static Usuario usuario;
+                                                     Jugador jugador;
                                                      if (receivedObject["action"] =="crearJugador") {
                                                          jugador.load(receivedObject);
-                                                         jugador.save();
+                                                         qDebug() << usuario.getUserId();
+                                                         jugador.save(usuario.getUserId());
                                                      }
 
                                                      if (receivedObject["action"] =="crearStaff"){
@@ -367,8 +369,8 @@ Servidor::Servidor(int puerto)
 
                                                      if (receivedObject["action"] =="crearUsuario"){
                                                          usuario.load(receivedObject);
-                                                         usuario.save();
-                                                         //webSocket->send(crearUsuario(receivedObject).dump());
+                                                         bool ok = usuario.save();
+                                                         webSocket->send(usuario.RespuestaRegistro(nuevoID() , receivedObject , ok).dump());
                                                     }
 
                                                      if (receivedObject["action"] =="iniciarSesion"){
@@ -376,6 +378,12 @@ Servidor::Servidor(int puerto)
                                                          webSocket->send(usuario.loguear(nuevoID()).dump());
 
                                                     }
+
+                                                     if(receivedObject["action"] == "listarJugadores"){
+                                                         JSON respuesta = jugador.lista(usuario.getUserId() , receivedObject , nuevoID());
+                                                         webSocket->send(respuesta.dump());
+                                                     }
+
                                                  }
 
                                              }

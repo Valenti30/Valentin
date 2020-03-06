@@ -21,11 +21,37 @@
 	.menuCSS3 ul li a:hover + ul, .menuCSS3 ul li ul:hover {
 		display: block;
 	}
-	body{
+	#principal{
         
-	background-image: url(../img/fondo.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+        background-image: url(../img/fondo.jpg);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 100%; 
+        height: 100%; 
+    }
+    
+    #id02{
+        display: none;
+        background-color:green;
+    }
+    
+    #contenido{
+        width: 100%; 
+        height: 100%; 
+        margin-top:50%;
+        /*margin-bottom:50%;*/
+    }
+    
+    #marcador{
+        background-image: url(../img/marcador.jpg);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 100%; 
+        height: 1000px;  
     }
 
+    #btn-salir{
+        margin-top: 30px;
+        margin-left: 1100px;
+    }
 	
