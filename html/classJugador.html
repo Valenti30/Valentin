@@ -107,15 +107,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abe37872318ab13c0b6043302eb31082c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJugador.html#abe37872318ab13c0b6043302eb31082c">setEmail</a> (QString email)</td></tr>
 <tr class="memdesc:abe37872318ab13c0b6043302eb31082c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modificar el email del jugador.  <a href="#abe37872318ab13c0b6043302eb31082c">More...</a><br /></td></tr>
 <tr class="separator:abe37872318ab13c0b6043302eb31082c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a259600a922dca782041b65d3a35220ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJugador.html#a259600a922dca782041b65d3a35220ae">save</a> ()</td></tr>
-<tr class="memdesc:a259600a922dca782041b65d3a35220ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">BBDD connectors.  <a href="#a259600a922dca782041b65d3a35220ae">More...</a><br /></td></tr>
-<tr class="separator:a259600a922dca782041b65d3a35220ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeb38c07c438551fd1d43a963e3b0b15"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJugador.html#aeeb38c07c438551fd1d43a963e3b0b15">save</a> (int idUsuario)</td></tr>
+<tr class="memdesc:aeeb38c07c438551fd1d43a963e3b0b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">BBDD connectors.  <a href="#aeeb38c07c438551fd1d43a963e3b0b15">More...</a><br /></td></tr>
+<tr class="separator:aeeb38c07c438551fd1d43a963e3b0b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a500d0e508636a711ae941b7557641c1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJugador.html#a500d0e508636a711ae941b7557641c1a">load</a> (int id)</td></tr>
 <tr class="memdesc:a500d0e508636a711ae941b7557641c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carga los datos de un jugador en el objeto jugador.  <a href="#a500d0e508636a711ae941b7557641c1a">More...</a><br /></td></tr>
 <tr class="separator:a500d0e508636a711ae941b7557641c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2da8cec1afc1c566872dcc27f41e955"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJugador.html#ae2da8cec1afc1c566872dcc27f41e955">load</a> (<a class="el" href="jugador_8h.html#ab6104b89642419db4e355b7b2e40abbe">JSON</a> received)</td></tr>
 <tr class="memdesc:ae2da8cec1afc1c566872dcc27f41e955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carga los datos de un jugador.  <a href="#ae2da8cec1afc1c566872dcc27f41e955">More...</a><br /></td></tr>
 <tr class="separator:ae2da8cec1afc1c566872dcc27f41e955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c7e8a139b10c0b077a553568f407057"><td class="memItemLeft" align="right" valign="top"><a id="a0c7e8a139b10c0b077a553568f407057"></a>
+<a class="el" href="jugador_8h.html#ab6104b89642419db4e355b7b2e40abbe">JSON</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lista</b> (int idUsuario, <a class="el" href="jugador_8h.html#ab6104b89642419db4e355b7b2e40abbe">JSON</a> cliente, int idServer)</td></tr>
+<tr class="separator:a0c7e8a139b10c0b077a553568f407057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa093cf63f9a65ed527f3da6431271d2"><td class="memItemLeft" align="right" valign="top"><a id="afa093cf63f9a65ed527f3da6431271d2"></a>
+<a class="el" href="jugador_8h.html#ab6104b89642419db4e355b7b2e40abbe">JSON</a>&#160;</td><td class="memItemRight" valign="bottom"><b>toJSON</b> (<a class="el" href="classJugador.html">Jugador</a> jugador)</td></tr>
+<tr class="separator:afa093cf63f9a65ed527f3da6431271d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aba79aff8e870ffe04bf5a4ffd94f5e5d"></a>
@@ -291,8 +297,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a259600a922dca782041b65d3a35220ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a259600a922dca782041b65d3a35220ae">&#9670;&nbsp;</a></span>save()</h2>
+<a id="aeeb38c07c438551fd1d43a963e3b0b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeeb38c07c438551fd1d43a963e3b0b15">&#9670;&nbsp;</a></span>save()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,7 +306,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool Jugador::save </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>idUsuario</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

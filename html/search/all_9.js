@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['usuario',['Usuario',['../classUsuario.html',1,'']]],
-  ['usuario_2ecpp',['usuario.cpp',['../usuario_8cpp.html',1,'']]],
-  ['usuario_2eh',['usuario.h',['../usuario_8h.html',1,'']]]
+  ['readme',['README',['../md_README.html',1,'']]],
+  ['respuestaregistro',['RespuestaRegistro',['../classUsuario.html#a480797ff338cebce9bc00784e8007dfc',1,'Usuario']]]
 ];

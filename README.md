@@ -61,9 +61,7 @@ En estos momentos la aplicación se encuentra en desarrollo, las funciones que s
 - PhpPgAdmin Es una página web que administra bases de datos PostgressSQL
 - Usuarios disponibles para hacer el login:
 - 1: usuario -> valen, pass -> 1234
-- 2: usuario -> ivan, pass -> 1234
-- 3: usuario -> valentin, pass -> 12345
-- 4: usuario -> gonsito, pass -> gonsito
+- 3: usuario -> javi, pass -> javi
 
 ## Autores
 
