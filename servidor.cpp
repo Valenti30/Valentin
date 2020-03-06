@@ -10,6 +10,7 @@
 #include "jugador.h"
 #include "servidor.h"
 #include "usuario.h"
+#include "conexion.h"
 
 /*! \file */
 
@@ -241,8 +242,6 @@ Servidor::Servidor(int puerto)
 
 
     ///Para conectar la bbdd
-    QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-    bool conectado {false};
 
 
      ix::WebSocketServer server(9990, "0.0.0.0");
@@ -259,11 +258,11 @@ Servidor::Servidor(int puerto)
      server.setTLSOptions(tlsOptions);*/
 
      server.setOnConnectionCallback(
-        [&server, &db, &conectado](std::shared_ptr<ix::WebSocket> webSocket,
+        [&server](std::shared_ptr<ix::WebSocket> webSocket,
                    std::shared_ptr<ix::ConnectionState> connectionState)
          {
              webSocket->setOnMessageCallback(
-                [webSocket, connectionState, &server, &db, &conectado](const ix::WebSocketMessagePtr msg)
+                [webSocket, connectionState, &server](const ix::WebSocketMessagePtr msg)
                  {
                      if (msg->type == ix::WebSocketMessageType::Open)
                      {
@@ -272,13 +271,20 @@ Servidor::Servidor(int puerto)
                          qDebug() << QObject::tr("New connection");
 
                         ///Conectar la bbdd:
-                        db.setHostName("localhost");
+                        /*db.setHostName("localhost");
                         db.setDatabaseName("AplicacionBaloncesto");
                         db.setUserName("postgres");
-                        db.setPassword("");
+                        db.setPassword("");*/
 
-                        conectado = db.open();
-                        qDebug() << conectado;
+                        Conexion conect;
+
+                        bool conectado = conect.open();
+                        if (conectado)
+                        {
+                            qDebug () << "conecta con la bbdd";
+                        }else {
+                            exit(0);
+                        }
                           JSON jsonmessage=
                           {
                               {"type", "1"},

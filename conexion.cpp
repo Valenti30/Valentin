@@ -2,13 +2,12 @@
 /*! \file */
 
 //! Clase conexion
- /*! La clase conexion al final no la uso, implementé la conexión de la bbdd en la clase
-  * del servidor. Lo replanteé de diferente forma y al final no ha sido necesaria.
-  * No la borra ya que a lo mejor si replanteo la idea podría necesitarla.
+ /*! La clase conexion sirve para buscar en archivo que contiene la bbdd
+  * Si no se encuentra el archivo, que de un error, si se encuentra, que funcione
+  * todo correcto mediante las comprobaciones necesarias
  */
 
-
-/*#include "conexion.h"
+#include "conexion.h"
 #include <iostream>
 #include <QFile>
 #include <QIODevice>
@@ -34,7 +33,7 @@ void Conexion::processLine(std::string line)
 void Conexion::readFile()
 {
 
-    QString nombreArchivo = "/home/usuario/C++/servidorAplicacionBaloncesto/BaseDatos/";
+    QString nombreArchivo = "./BaseDatos/baseDatos.conf";
 
     if(QFile::exists(nombreArchivo) ){
 
@@ -62,7 +61,6 @@ void Conexion::readFile()
 
 void Conexion::loadProperties()
 {
-
     readFile();
 
     m_hostName = QString::fromUtf8(m_propiedades["hostname"].c_str());
@@ -85,18 +83,15 @@ bool Conexion::open()
     m_db.setUserName(m_userName);
     m_db.setPassword(m_password);
 
-
     /// 2) Abrir conexión
     bool ok = m_db.open();
-
     return ok;
 
 }
 
+
 void Conexion::close()
 {
-
     m_db.close();
-
-}*/
+}
 
