@@ -142,7 +142,7 @@ JSON Usuario::loguear(int id_Server){
             load(q2.value("idusuario").toInt());
         }else{
             qDebug() << "entra2";
-            respuesta["respuesta"] = "la contraseña y el usuario no coinciden";
+            respuesta["respuesta"] = "el usuario y la contraseña no son validos";
         }
     }//end if
     return  respuesta;

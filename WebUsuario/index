@@ -79,7 +79,7 @@ socket.onmessage = function(event) {     //Lo que ejecutamos cuando se recibe un
      idusuario = object.idusuario;
   }
   
-    if (object.respuesta == "la contraseña y el usuario no coinciden"){
+    if (object.respuesta == "el usuario y la contraseña no son validos"){
         document.getElementById("errorLog").style.display = "block";
     }
   
@@ -137,33 +137,40 @@ socket.onerror = function(error) {
             <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
         </div>
             <div  class="container" align="left"> 
-                <label class="datos" for="uname"><b>Username</b></label>
-                <input id="usuario_login" type="text" placeholder="Usuario" name="uname" required>
-                <br>
-                <br>
-                <br>
-                <label for="psw"><b>Password</b></label>
-                <input id="contrasenya_login" type="password" placeholder="Contraseña" name="psw" required>
-                <br>
-                <br>
-                <b id = "errorLog" style = "color: red; display: none">la contraseña y el usuario no coinciden</b>
-                <button id="log" onclick="iniciarSesion()">Login</button>
-                <br>
-                <br>
-                
-                <span class="psw"><button onclick = "mostrarRegistro()">No estoy registrado</button></span>
+                <form id = "form1" onsubmit = "iniciarSesion(); return false">
+                    <label class="datos" for="uname"><b>Username</b></label>
+                    <input id="usuario_login" type="text" placeholder="Usuario" name="uname" required>
+                    <br>
+                    <br>
+                    <br>
+                    <label for="psw"><b>Password</b></label>
+                    <input id="contrasenya_login" type="password" placeholder="Contraseña" name="psw" required>
+                    <br>
+                    <br>
+                    <b id = "errorLog" style = "color: red; display: none">el usuario y la contraseña no son validos</b>
+                    <input type= "submit" id="log" value ="Login"></input>
+                    <br>
+                    <br>
+                    
+                    <span class="psw"><button onclick = "mostrarRegistro()">No estoy registrado</button></span>
+                </form>
             </div> 
     </div>
     
     <div id = "id02" style = "display: none">
+        <form id = "form2" onsubmit = "crearUsuario(); return false">
             <center>
                 <h1>Registro</h1>
-                <center><input id = "usuario" type = "text" placeholder="nombre de usuario"></input></center><br><br>
-                <input id = "password" type = "password" placeholder="contraseña"></input><br><br>
+                <center>
+                <b> Nombre: </b> <br><br>
+                <input id = "usuario" type = "text" placeholder="nombre de usuario" required></input></center><br><br>
+                <b> Contraseña: </b> <br><br>
+                <input id = "password" type = "password" placeholder="contraseña" required></input><br><br>
                 <b id = "error" style = "color :  red ; display : none;">se ha producido un error</b> <br> <br>
-                <button onclick = crearUsuario()>Registrar</button>
+                <input type="submit" onclick = crearUsuario() value="Registrar"></button>
                 <button type="button" onclick="cerrarCapa2()" class="cancelbtn">Cancelar</button> 
             </center>
+        </form>
     </div>
 
 
@@ -203,22 +210,29 @@ socket.onerror = function(error) {
             </div>
             <div id = "contenido">
                     <div id = "id03" class="modal" style="background-color:green">
+                    <form id = "form3" onsubmit = "crearJugador(); return false">
                         <center>
                             <h1>Crear Jugador</h1>
-                            <input id = "nombre" type = "text" placeholder = "nombre del jugador"> </input> <br><br>
-                            <input id = "apellidos" type = "text" placeholder = "apellidos del jugador"> </input> <br><br>
-                            <input id = "dni" type = "text" placeholder = "dni del jugador"> </input> <br><br>
-                            <input id = "dorsal" type = "number" placeholder = "dorsal del jugador" style = "width: 10%"> </input> <br><br>
-                            <select id = "posicion" placeholder = "posicion del jugador" style = "width: 11%"> 
+                            <b> Nombre*: </b> <br> <br>
+                            <input id = "nombre" type = "text" placeholder = "nombre del jugador" required> </input> <br><br>
+                            <b> Apellidos*: </b> <br> <br>
+                            <input id = "apellidos" type = "text" placeholder = "apellidos del jugador" required> </input> <br><br>
+                            <b> Dni*: </b> <br> <br>
+                            <input id = "dni" type = "text" placeholder = "dni del jugador" required> </input> <br><br>
+                            <b> Dorsal*: </b> <br> <br>
+                            <input id = "dorsal" type = "number" placeholder = "dorsal del jugador" style = "width: 10%" required> </input> <br><br>
+                            <b> Posición*: </b> <br> <br>
+                            <select id = "posicion" placeholder = "posicion del jugador" style = "width: 11%" required> 
                                 <option>1-Base</option>
                                 <option>2-Alero</option>
                                 <option>3-Escolta</option>
                                 <option>4-Ala-pivot</option>.
                                 <option>5-Pivot</option>
                             </select> <br><br>
-                            <input id = "email" type = "email" placeholder = "email del jugador"> </input> <br><br>
-                            <button onclick = crearJugador()>Crear jugador</button>
-                            <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancelar</button>
+                            <b> Email*: </b> <br> <br>
+                            <input id = "email" type = "email" placeholder = "email del jugador" required> </input> <br><br> <br>
+                            <input type="submit" onclick = crearJugador() value="Crear jugador"></button>
+                            <button  onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancelar</button>
                         </center>
                     </div>
             </div>

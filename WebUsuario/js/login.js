@@ -50,6 +50,7 @@ function cerrarCapa2()
 {
     var el = document.getElementById("id02"); 
     el.style.display = "none"; 
+    document.getElementById("form1").reset();
 
     document.getElementById("id01").style.display = "block";
 }
@@ -93,6 +94,7 @@ function logout()
     lo.style.display = "block";
      var Json = {action: "logout"};
     socket.send(JSON.stringify(Json));
+    document.getElementById("form1").reset();
 }
 
 /*window.onload = function(){
@@ -109,12 +111,15 @@ function crearUsuario(){
     if(usuarioValue != "" && passValue != ""){
         var Json = {id_Cliente: id_mensaje ,action: typeValue , usuario: usuarioValue , password: passValue};
         socket.send(JSON.stringify(Json));
+        document.getElementById("form2").reset();
+        document.getElementById("form1").reset();
     }else{
     
         document.getElementById("error").style.display = "block";
     }
 
 }
+
 
 function crearJugador()
 {
@@ -129,13 +134,14 @@ function crearJugador()
     var emailValue = document.getElementById("email").value;
     
     var comprobar1 = /^([1-9][1-9][1-9][1-9][1-9][1-9][1-9][1-9][a-zA-Z])$/.test(dniValue);
-    var comprobar2 = /^([1-9][1-9]*)$/.test(dorsalValue);
+    var comprobar2 = /^([1-9]+)$/.test(dorsalValue);
     var comprobar3 = /^([a-zA-Z][a-zA-Z1-9]*@[a-zA-Z][a-zA-Z1-9]+)$/.test(emailValue);
     
     if(nombreValue != "" && apellidosValue != "" && dniValue != "" && dorsalValue != "" && posicionValue != "" && posicionNumero != "" && emailValue != ""){
         if(comprobar1 && comprobar2 && comprobar3){
             var Json = {id_Cliente: id_mensaje, action: "crearJugador", nombre: nombreValue, apellidos: apellidosValue, dni: dniValue, dorsal: dorsalValue, posicion: posicionNumero[0], email: emailValue};
             socket.send(JSON.stringify(Json));
+            document.getElementById("form3").reset();
             cerrarCapa3();
         }
     }
@@ -179,6 +185,7 @@ function mostrarRegistro()
 
     document.getElementById("id01").style.display= "none";
     document.getElementById("id02").style.display = "block"; 
+    document.getElementById("form2").reset();
 }
 
 function marcador()
