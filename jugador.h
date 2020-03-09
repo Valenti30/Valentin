@@ -53,6 +53,7 @@ public:
      bool save(int idUsuario);
      void load(int id);
      void load(JSON received);
+     void deleteJug(int idJugador);
      JSON lista(int idUsuario, JSON cliente , int idServer);
      JSON toJSON(Jugador jugador);
 

@@ -135,10 +135,10 @@ function crearJugador()
     
     var comprobar1 = /^([1-9][1-9][1-9][1-9][1-9][1-9][1-9][1-9][a-zA-Z])$/.test(dniValue);
     var comprobar2 = /^([1-9]+)$/.test(dorsalValue);
-    var comprobar3 = /^([a-zA-Z][a-zA-Z1-9]*@[a-zA-Z][a-zA-Z1-9]+)$/.test(emailValue);
+    var comprobar3 = emailValue.split("@");
     
     if(nombreValue != "" && apellidosValue != "" && dniValue != "" && dorsalValue != "" && posicionValue != "" && posicionNumero != "" && emailValue != ""){
-        if(comprobar1 && comprobar2 && comprobar3){
+        if(comprobar1 && comprobar2 && comprobar3[1] != null){
             var Json = {id_Cliente: id_mensaje, action: "crearJugador", nombre: nombreValue, apellidos: apellidosValue, dni: dniValue, dorsal: dorsalValue, posicion: posicionNumero[0], email: emailValue};
             socket.send(JSON.stringify(Json));
             document.getElementById("form3").reset();
@@ -174,9 +174,18 @@ function recogerDatos(element){
     var posicion = element.jugador.posicion;
     var email = element.jugador.email;
     var option = document.createElement("option");
-    option.text = "*ID:*   "+ id + "   *Nombre:*   "+ nombre + "   *Apellidos:*   " + apellidos + "    *Dni:*    "+ dni + "   *Dorsal:*   "+ dorsal + "   *Posición:*   " + posicion + "   *Email:*   " + email;
+    option.text = "ID:   "+ id + "   Nombre:   "+ nombre + "   Apellidos:   " + apellidos + "    Dni:    "+ dni + "   Dorsal:   "+ dorsal + "   Posición:   " + posicion + "   Email:   " + email;
     lista.add(option);
 }
+
+function deleteJug(){
+    var lista = document.getElementById("lista").value;
+    var id = lista.split(" ");
+    var Json = {action: "eliminarJugador" , id: id[1]};
+    socket.send(JSON.stringify(Json));
+    listarJugadores();
+}
+
 
 
 

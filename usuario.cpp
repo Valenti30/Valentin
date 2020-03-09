@@ -63,7 +63,7 @@ bool Usuario::save(){
     {
     //UPDATE
         qDebug() << "Update";
-        q.prepare("UPDATE jugadores SET usuario = :user, pass = :password WHERE id = :iduser");
+        q.prepare("UPDATE jugadores SET usuario = :user, pass = crypt(:password , gen_salt('bf')) WHERE id = :iduser");
         q.bindValue(":iduser", m_idUser);
         q.bindValue(":user", m_user);
         q.bindValue(":password", m_pass);
@@ -72,7 +72,7 @@ bool Usuario::save(){
     {
     //INSERT
        qDebug() << "Insert";
-       q.prepare("INSERT INTO usuarios (usuario, pass) VALUES (:user, :password)");
+       q.prepare("INSERT INTO usuarios (usuario, pass) VALUES (:user, crypt(:password , gen_salt('bf')))");
        q.bindValue(":user", m_user);
        q.bindValue(":password", m_pass);
     } //end if
@@ -125,7 +125,7 @@ JSON Usuario::loguear(int id_Server){
     JSON respuesta;
     respuesta["id_Servidor"] = id_Server;
     QSqlQuery q2;
-    q2.prepare("SELECT * from usuarios WHERE usuario = :nombre and pass = :password");
+    q2.prepare("SELECT * from usuarios WHERE usuario = :nombre and pass = crypt(:password , pass)");
     q2.bindValue(":nombre", m_user);
     q2.bindValue(":password", m_pass);
     q2.next();

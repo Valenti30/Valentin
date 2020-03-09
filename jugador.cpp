@@ -208,6 +208,23 @@ void Jugador::load(int id)
     } //end if
 }
 
+void Jugador::deleteJug(int idJugador){
+    QSqlQuery q;
+    q.prepare("DELETE FROM jugadores where idjugadores = :idJugador");
+    q.bindValue(":idJugador", idJugador);
+    q.next();
+
+    bool result {q.exec()};
+    qDebug() << q.size();
+
+    if(result)
+    {
+        q.next();
+    }else{
+        qDebug() << q.lastError().text();
+    }
+}
+
 JSON Jugador::lista(int idUsuario, JSON cliente , int idServer){
     QSqlQuery q;
     q.prepare("SELECT * FROM jugadores WHERE idusuario = :idUsuario");

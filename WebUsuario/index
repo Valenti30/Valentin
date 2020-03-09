@@ -242,6 +242,7 @@ socket.onerror = function(error) {
                     <h1>Listado de jugadores</h1>
                     <select id = "lista" size = "10" style = "width: 90%"></select> <br><br>
                     <button type="button" onclick="document.getElementById('id04').style.display='none'" class="cancelbtn">Aceptar</button>
+                    <button onclick = "deleteJug()"> Eliminar jugador</button>
                 </center>
             </div>
 

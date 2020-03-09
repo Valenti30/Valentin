@@ -60,8 +60,8 @@ En estos momentos la aplicación se encuentra en desarrollo, las funciones que s
 - Nombre de la BBDD: AplicacionBaloncesto
 - PhpPgAdmin Es una página web que administra bases de datos PostgressSQL
 - Usuarios disponibles para hacer el login:
-- 1: usuario -> valen, pass -> 1234
-- 2: usuario -> javi, pass -> javi
+- 1: usuario -> javi, pass -> javi
+- 2: usuario -> wismichu, pass -> hola
 
 ## Autores
 

@@ -389,6 +389,10 @@ Servidor::Servidor(int puerto)
                                                          JSON respuesta = jugador.lista(usuario.getUserId() , receivedObject , nuevoID());
                                                          webSocket->send(respuesta.dump());
                                                      }
+                                                     if(receivedObject["action"] == "eliminarJugador"){
+                                                         qDebug() << "borrando...";
+                                                         jugador.deleteJug(QString::fromStdString(receivedObject["id"]).toInt());
+                                                     }
 
                                                  }
 
